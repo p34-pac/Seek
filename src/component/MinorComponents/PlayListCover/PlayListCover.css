@@ -1,0 +1,128 @@
+.PlayListCover{
+    width: 100%;
+    height: 200px;
+    min-height: 40vh;
+    position: sticky;
+    top: calc(-25vh + 85px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 1;
+}
+.PlayListCover .playListThumbnail {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+.PlayListCover .playListThumbnail img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.PlayListCover *:not(.playListThumbnail){
+    z-index: 1;
+}
+.PlayListCover .bottom {
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    bottom: 0px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary200);
+    margin-bottom: -50px;
+    border-radius: 30px 0 0 0;
+    box-shadow: 0px 5px 10px var(--primary400);
+}
+.PlayListCover .bottom .play-list {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-left: 5dvw;
+    
+    
+}
+.PlayListCover .bottom .play-list .playBtn{
+    width: 10rem;
+    height: 10rem;
+    max-width: 100px;
+    max-height: 100px;
+    background-color: var(--primary200);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.PlayListCover .bottom .play-list .playBtn svg{
+    width: 100%;
+    height: 100%;
+}
+.PlayListCover .bottom .play-list b{
+    font-weight: bolder;
+    font-size: clamp(15px, 1.5rem, 2rem);
+    margin-bottom: 10px;
+    color: var(--baseBlack1000);
+
+}
+.PlayListCover .adding{
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: var(--primary200);
+    border-radius: 10px 0px 0 0;
+    cursor: pointer;
+    transform: translateY(-60px);
+}
+.PlayListCover .adding i{
+    width: 2rem;
+    height: 2rem;
+    max-width: 30px;
+    max-height: 30px;
+    border-radius: 50%;
+}
+.PlayListCover .adding i svg{
+    width: 100%;
+    height: 100%;
+}
+.PlayListCover .adding b{
+    font-weight: bolder;
+    font-size: clamp(12px, 1.2rem, 1.8rem);
+    padding-right: 5px;
+    color: var(--baseBlack1000);
+}
+
+@media screen and (max-width: 500px) {
+    .PlayListCover{
+        top: calc(-25vh);
+    }
+    .PlayListCover .bottom .play-list .playBtn{
+        max-width: 50px;
+        max-height: 50px;
+    }
+    .PlayListCover .bottom .play-list b{
+        margin-bottom: 5px;
+    }
+    .PlayListCover .bottom .play-list b,
+    .PlayListCover .adding b{
+        font-size: clamp(10px, 1rem, 1.5rem);
+    }
+    .PlayListCover .adding i{
+        max-width: 24px;
+        max-height: 24px;
+    }
+    .PlayListCover .adding{
+        transform: translateY(-40px);
+    }
+    
+}

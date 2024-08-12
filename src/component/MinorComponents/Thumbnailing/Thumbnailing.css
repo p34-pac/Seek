@@ -1,0 +1,26 @@
+.collage {
+    display: grid;
+    gap: 5px;
+  }
+  
+  .collage-1 {
+    grid-template-columns: 1fr;
+  }
+  
+  .collage-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .collage-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .collage-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .collage-item {
+    width: 100%;
+    height: auto;
+  }
+  

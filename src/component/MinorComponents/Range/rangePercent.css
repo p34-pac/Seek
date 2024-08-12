@@ -1,0 +1,110 @@
+.MediaRange{
+    width: 80%;
+    height: fit-content;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .MediaRange .done{
+    width: 0%;
+    height: 10px;
+    position: absolute;
+    border-radius: 15px;
+    top: 2;
+    left: 0;
+    background-color: var(--primary800);
+    z-index: 0;
+  }
+  .MediaRange .rest{
+    width: 0%;
+    height: 10px;
+    position: absolute;
+    border-radius: 15px;
+    top: 2;
+    right: 0;
+    background-color: var(--primary500);
+    z-index: 0;
+  }
+  .MediaRange>input[type="range"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none; 
+    /* creating a custom design */
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    border-radius: 15px;
+    /*  overflow: hidden;  remove this line*/
+    
+    /* New additions */
+    height: 6px;
+    background: #00000000;
+    z-index: 1;
+  }
+  
+  /* Thumb: webkit */
+  .MediaRange>input[type="range"]::-webkit-slider-thumb {
+    display: none;
+  }
+  .MediaRange>input[type="range"]:hover::-webkit-slider-thumb {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none; 
+    display: block;
+  
+    /* creating a custom design */
+    height: 15px;
+    width: 15px;
+    background-color: var(--primary1000);
+    border-radius: 50%;
+    border: none;
+  
+    /* box-shadow: -407px 0 0 400px #f50; emove this line */
+    transition: .2s ease-in-out;
+    z-index: 1;
+    position: relative;
+  }
+  
+  /* Thumb: Firefox */
+  .MediaRange>input[type="range"]::-moz-range-thumb {
+    display: none;
+  
+  }
+  .MediaRange>input[type="range"]:hover::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: var(--primary800);
+    border-radius: 50%;
+    border: none;
+    display: block;
+    
+    /* box-shadow: -407px 0 0 400px #f50; emove this line */
+    transition: .2s ease-in-out;
+    z-index: 1;
+    position: relative;
+  }
+  
+  /* Hover, active & focus Thumb: Webkit */
+  
+  .MediaRange.disc>input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 10px var(--primary500)
+  }
+  .MediaRange.disc>input[type="range"]:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px var(--primary500)
+  }
+  .MediaRange.disc>input[type="range"]:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px var(--primary500)
+  }
+  
+  /* Hover, active & focus Thumb: Firfox */
+  
+  .MediaRange.disc>input[type="range"]::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 10px var(--primary500)
+  }
+  .MediaRange.disc>input[type="range"]:active::-moz-range-thumb {
+    box-shadow: 0 0 0 13px var(--primary500)
+  }
+  .MediaRange.disc>input[type="range"]:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 13px var(--primary500)    
+  }

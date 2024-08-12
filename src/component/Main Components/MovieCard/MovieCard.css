@@ -1,0 +1,280 @@
+.MovieCard{
+    width: 100%;
+    height: fit-content;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    background-color: var(--primary100);
+    border-radius: 10px;
+    gap: 10px;
+    
+}
+.MovieCard.vertical{
+    width: fit-content;
+    flex-direction: column;
+}
+
+
+
+.MovieCard .Thumbnailing {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    position: relative;
+    border-radius: 10px 0 0 10px;
+}
+.MovieCard .Thumbnailing.dropRight , .MovieCard .Thumbnailing.noOption {
+    justify-content: flex-end;
+}
+.MovieCard.vertical .Thumbnailing{
+    width: 100%;
+    height: 150px;
+    border-radius: 10px 10px 0 0;
+}
+.MovieCard.shrink .Thumbnailing{
+    height: 8rem;
+}
+
+
+.MovieCard .Thumbnailing .imgBox {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--primary300);
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+}
+.MovieCard .Thumbnailing .imgBox img{
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+}
+.MovieCard .Thumbnailing .playHover{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.27);
+    backdrop-filter: grayscale(50%);
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+.MovieCard:hover .Thumbnailing .playHover{
+    opacity: 100%;
+    transition-duration: 200ms;
+}
+.MovieCard.vertical .Thumbnailing .imgBox,
+.MovieCard.vertical .Thumbnailing .playHover{
+    border-radius: 10px 10px 0 0;
+}
+.MovieCard .Thumbnailing .imgBox span{
+    height: 100% !important;
+    width: 100%;
+
+}
+.MovieCard .Thumbnailing .imgBox span img{
+    width: 100%;
+    height: 100%;
+    object-position: top;
+    object-fit: cover;
+}
+
+.MovieCard .Thumbnailing .otherOptions{
+    margin-top: 10px;
+    margin-left: 0;
+    z-index: 1;
+
+}
+.MovieCard.vertical .Thumbnailing .otherOptions .options{
+    width: 150px;
+}
+.MovieCard.vertical .Thumbnailing .otherOptions .options {
+    font-size: clamp(8px, 1.2rem, 1.8rem) !important;
+}
+
+
+.MovieCard .Thumbnailing .otherOptions .open{
+    width: 24px;
+    height: 24px;
+    border: none;
+}
+
+
+.MovieCard .Thumbnailing .bottomContent {
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    /* margin-bottom: -5px; */
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.69);
+    backdrop-filter: blur(100px) grayscale(100%);
+    border-bottom-left-radius: 5px;
+}
+.MovieCard.vertical .Thumbnailing .bottomContent {
+    border-radius: none;
+}
+.MovieCard .Thumbnailing .bottomContent *{
+    color: var(--baseWhite1000);
+}
+.MovieCard .Thumbnailing .bottomContent .icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.MovieCard .Thumbnailing .bottomContent .icon .b{
+    font-size: clamp(8px, 1.5rem, 1.8rem);
+
+}
+.MovieCard .Thumbnailing .bottomContent .icon svg{
+    width: 100%;
+    height: 100%;
+}
+.MovieCard .Thumbnailing .bottomContent .rating{
+    font-size: clamp(8px, 1.5rem, 1.8rem);
+    z-index: -1;
+}
+.MovieCard.vertical .Thumbnailing .otherOptions .open{
+    width: 24px;
+    height: 24px;
+    border: none;
+}
+.MovieCard.vertical  .Thumbnailing .bottomContent .rating{
+    font-size: clamp(8px, 1.2rem, 1.8rem);
+}
+
+
+.MovieCard  .content {
+    width: fit-content;
+    min-width: calc(100% - 200px);
+    height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: left;
+}
+.MovieCard.vertical .content{
+    width: 10rem;
+    min-width: calc(100% - 10px);
+    height: fit-content;
+
+    gap: 10px;
+
+} 
+.MovieCard.shrink .content{
+    height: fit-content !important;
+    min-height: 8rem;
+    
+}
+.MovieCard.tabled3,
+.MovieCard.tabled4{
+    width: 100%;
+    max-width: 100%;
+    height: fit-content;
+    gap: 0;
+}
+.MovieCard.tabled3 .content,
+.MovieCard.tabled4 .content{
+    display: grid;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.MovieCard.tabled3 .content{
+    grid-template-columns: repeat(3, 1fr);
+}
+.MovieCard.tabled4 .content{
+    grid-template-columns: repeat(4, 1fr);
+}
+.MovieCard.tabled3:nth-child(even) .content b:nth-child(odd),
+.MovieCard.tabled4:nth-child(even) .content b:nth-child(odd){
+    background-color: var(--primary200);
+}
+.MovieCard.tabled3:nth-child(odd) .content b:nth-child(even),
+.MovieCard.tabled4:nth-child(odd) .content b:nth-child(even){
+    background-color: var(--primary200);
+}
+.MovieCard.tabled3 .content b,
+.MovieCard.tabled4 .content b{
+    width: 100%;
+    height: 100%;
+    max-width: fit-content;
+    min-height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-wrap: nowrap;
+}
+
+
+
+.MovieCard  .content b i{
+    font-style: normal;
+    font-size: clamp(10px, 1.5rem, 1.8rem);
+    color: var(--baseBlack1000);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: calc(1.5em * 1); /* Adjust to the number of lines */
+}
+
+.MovieCard b{
+    font-size: clamp(10px, 1.5rem, 1.8rem);
+    
+}
+.MovieCard  .content b::before{
+    color: var(--baseBlack500);
+}
+
+.MovieCard  .content b.third{
+    color: var(--baseBlack500);
+}
+.MovieCard  .content .first,
+.MovieCard  .content .second,
+.MovieCard  .content .third,
+.MovieCard  .content .extra{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+.MovieCard .rightDrop {
+    width: fit-content;
+    height: fit-content;
+}
+.MovieCard .rightDrop *{
+    border: none;
+}
+
+
+@media screen and (max-width: 500px) {
+    .MovieCard  .content * {
+        font-size: clamp(10px, 1rem, 2rem) !important;
+    }
+
+}

@@ -1,0 +1,57 @@
+.collection{
+    width: 100%;
+    max-width: 500px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.collection .top{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    color: var(--baseBlack1000);
+}
+.collection .top .seeAll{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--baseBlack600);
+    font-size: clamp(10px, 1rem, 1.5rem) ;
+}
+
+.collection .top .seeAll i{
+    width: 5dvw;
+    height: 5dvw;
+    max-width: 1.8rem;
+    max-height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.collection .top .seeAll i svg{
+    width: 100%;
+    height: 100%;
+}
+.collection .top .collectionName{
+    font-size: clamp(10px, 1.2rem, 1.8rem) ;
+}
+
+.collection .content {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+}

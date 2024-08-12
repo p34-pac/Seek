@@ -1,0 +1,24 @@
+.RequestTest{
+    width: calc(100% - 40px);
+    background-color: aliceblue;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px;
+    zoom: 70%;
+    padding: 50px 20px;
+    color: var(--baseBlack1000);
+
+}
+
+.RequestTest h1{
+    color: var(--baseBlack1000);
+    width: 100%;
+    text-align: center;
+}
+.RequestTest > b{
+    width: 100%;
+    text-align: left;
+}

@@ -1,0 +1,352 @@
+.BottomControl{
+    width: 100vw;
+    height: 80px;
+    background-color: var(--sub-primary);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1 !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.BottomControl .mediaPlayedVis{
+    width: calc(35vw - 10px);
+    min-width: calc(200px - 10px);
+    height: 100%;
+    color: var(--primary-text);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-left: 10px;
+    border-radius: 10px;
+}
+.BottomControl .mediaPlayedVis:hover{
+    background-color: rgba(57, 55, 55, 0.464);
+    cursor: pointer;
+    transition-duration: 1s;
+}
+.BottomControl .mediaPlayedVis .thumbnailVisSHow {
+  width: 60px;
+  height: 60px;
+  background-color: var(--primary);
+  border-radius: 5px;
+}
+.BottomControl .mediaPlayedVis .audioContext {
+    width: calc(100% - 110px);
+    height: 60px;
+    border-radius: 5px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 10px;
+    overflow: hidden;
+  }
+  .audioArtistList{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .BottomControl .mediaPlayedVis .ICN-like{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .BottomControl .mediaPlayedVis .ICN-like svg{
+    width: 100%;
+    height: 100%;
+  }
+.BottomControl .playControls{
+    width: 35vw;
+    min-width: 300px;
+    height: 100%;
+    color: var(--primary-text);
+}
+
+.BottomControl .playControls .playControl {
+  width: 100%;
+  height: 40%;
+  margin: 0;
+  margin-top: 5px;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.BottomControl .playControls .playControl li{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.BottomControl .playControls .playControl li.play{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: green;
+}
+
+
+.BottomControl .playControls .playControl li.play img{
+    width: 50% !important;
+    height: 50% !important;
+    object-fit: cover;
+    object-position: center;
+}
+.BottomControl .playControls .playControl li.play svg{
+    fill: var(--primary) !important;
+    width: 50% !important;
+    height: 50% !important;
+}
+.BottomControl .playControls .playControl li.play svg path{
+    fill: var(--primary) !important;
+
+}
+.BottomControl .playControls .playControl li>svg{
+    width: 100% !important;
+    height: 100% !important;
+    stroke: none;
+}
+.BottomControl .playControls .playControl li>svg path{
+    fill: var(--sub-secondary);
+    stroke: none;
+}
+.BottomControl .playControls .playControl li:hover>svg path{
+    stroke: none;
+    fill: var(--primary-text);
+    transition-duration: 1s;
+}
+.BottomControl .playControls .playControl li.repeatOn>svg path,
+.BottomControl .playControls .playControl li.repeatSingleOn>svg path,
+.BottomControl .playControls .playControl li.shuffleOn>svg path{
+    fill: green;
+}
+.BottomControl .playControls .playControl li.repeatSingleOn::before{
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    left: 7px;
+    top: 25px;
+    background-color: green;
+
+}
+.BottomControl .playControls .soundTime{
+    width: 100%;
+    height: 60%;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
+.BottomControl .playControls .soundTime li{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.BottomControl .playControls .soundTime li.musicProgress{
+    width: 70%;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+    
+}
+.BottomControl .playControls .soundTime li.musicProgress #myAudio{
+    display: none;
+}
+
+.BottomControl .playControls .soundTime li.musicProgress input{
+    width: 100% !important;
+    display: block;
+    cursor: pointer;
+}
+.BottomControl .soundControl{
+    width: 35vw;
+    min-width: 300px;
+    height: 100%;
+    color: var(--primary-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.BottomControl .soundControl .controls {
+  width: calc(100% - 20px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  list-style-type: none;
+  padding: 0 10px;
+}
+.BottomControl .soundControl .controls li{
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.BottomControl .soundControl .controls li>svg{
+    width: 100%;
+    height: 100%;
+    stroke: var(--secondary-text);
+}
+.BottomControl .soundControl .controls li>svg path{
+    stroke: var(--sub-secondary);
+}
+.BottomControl .soundControl .controls li:hover>svg path{
+    stroke: var(--primary-text);
+    transition-duration: 1s;
+}
+.BottomControl .soundControl .controls li.volume {
+  width: fit-content !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.BottomControl .soundControl .controls li.volume button{
+    width: fit-content;
+    height: fit-content;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.forMin{
+    display: none !important;
+}
+.BottomControl .soundControl .controls li.volume .volumeCont svg{
+    width: 25px;
+    height: 25px;
+    display: none;
+}
+
+.BottomControl .soundControl .controls li.volume button svg{
+    width: 25px;
+    height: 25px;
+}
+.BottomControl .soundControl .controls li.volume button svg path{
+    stroke: var(--sub-secondary);
+}
+.BottomControl .soundControl .controls li.volume button:hover>svg path{
+    stroke: var(--primary-text);
+    transition-duration: 1s;
+
+}
+.BottomControl .soundControl .controls li.volume input{
+    width: 150px;
+    height: 10px;
+    cursor: pointer;
+}
+@media screen and (max-width: 850px) {
+    .BottomControl .mediaPlayedVis{
+        width: calc(35vw - 10px);
+        min-width: calc(300px - 10px);
+    }
+    .BottomControl .soundControl{
+        width: 150px;
+        min-width: 150px;
+    }
+    .BottomControl .playControls{
+        width: calc(35vw + 100px);
+        min-width: 300px;
+        height: 100%;
+        color: var(--primary-text);
+    }
+    .BottomControl .soundControl .controls li.volume{
+        position: relative;
+    }
+    .BottomControl .soundControl .controls li.volume .volumeCont {
+      width: fit-content;
+      height: fit-content;
+      padding: 10px;
+      background-color: var(--primary);
+      position: fixed;
+        transform: rotate(-90deg);
+        right: -80px;
+        top: 100px;
+        border-radius: 10px;
+        display: none ;
+        
+    }
+    .muteBtn{
+        display: none !important;
+    }
+    .forMin{
+        display: block !important;
+    }
+
+    .BottomControl .soundControl .controls li.volume .volumeCont.shown {
+          display: flex;
+          align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+          transition-duration: 1s;
+      }
+.BottomControl .soundControl .controls li.volume .volumeCont svg{
+    display: block;
+}
+
+}
+@media screen and (max-width: 760px) {
+    .BottomControl .mediaPlayedVis{
+        width: 100px;
+        min-width: calc(100px);
+    }
+    .BottomControl .mediaPlayedVis .audioContext{
+       display: none;
+    }
+    .BottomControl .playControls{
+        width: calc((100vw - 100px) - 150px) ;
+        min-width: 350px ;
+    }
+    .BottomControl .soundControl{
+        width: 150px;
+        min-width: 150px;
+    }
+}
+@media screen and (max-width: 610px) {
+    .BottomControl .mediaPlayedVis{
+        width: 100px;
+        min-width: calc(100px);
+    }
+    .BottomControl .mediaPlayedVis .audioContext{
+       display: none;
+    }
+    .BottomControl .playControls{
+        width: calc((100vw - 100px) - 150px) ;
+        min-width: calc((100vw - 100px) - 150px) ;
+    }
+    .BottomControl .soundControl{
+        width: 150px;
+        min-width: 150px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .BottomControl{
+        display: none;
+    }
+}

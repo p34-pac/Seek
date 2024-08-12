@@ -1,0 +1,144 @@
+
+/* side bar */
+
+.profileSection{
+    width: 500px;
+    /* max-width: 100vw !important; */
+    height: calc(100vh);
+    overflow-y: scroll;
+    background-color: var(--primary400);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding-bottom: 50px;
+}
+.profileSection .back{
+    width: calc(100%);
+    height: fit-content;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px;
+    backdrop-filter: blur(100px) grayscale(10%);
+}
+.profileSection .back i{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+    cursor: pointer;
+
+}
+.profileSection .back svg{
+    width: 30px;
+    height: 30px;
+}
+.profileSection .UserDp{
+    width: 100%;
+    max-width: 100%;
+    margin-top: -30px;
+}
+.profileSection .collectionsCategoryOverview{
+    width: calc(100% - 40px);
+    height: fit-content;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.profileSection .collectionsCategoryOverview .collection .MovieCard.shrink{
+    height: 100px;
+    border: none;
+    flex-basis: 0;
+    flex-grow: 0;
+    
+}
+.profileSection .collectionsCategoryOverview .collection .MovieCard .otherOptions .options{
+    width: 150px;
+    background-color: var(--primary800);
+    color: var(--primary100);
+}
+.profileSection .collectionsCategoryOverview .collection .MovieCard .otherOptions .options >*:hover{
+    background-color: var(--primary600);
+    color: var(--primary100);
+    transition-duration: 200ms;
+}
+
+
+.profileSection .collectionsCategoryOverview .collection .MovieCard .otherOptions .options * {
+    font-size: clamp(8px, 1.2rem, 1.8rem) !important;
+
+}
+.profileSection .collectionsCategoryOverview .collection .MovieCard.shrink > *{
+    max-height: 100px;
+}
+.profileSection .collectionsCategoryOverview .collection .MovieCard.shrink > .content{
+    min-height: calc(100px - 10px) !important;
+    padding: 5px 5px;
+    justify-content: space-between;
+}
+.profileSection .collectionsCategoryOverview .collection .MovieCard.shrink *{
+    font-size: clamp(10px, 1rem, 1.5rem) !important;
+}
+.profileSection .collectionsCategoryOverview .collection .MovieCard.shrink .icon{
+    width: 1.2rem;
+    max-width: 24px;
+}
+.profileSection .collectionsCategoryOverview .collection.Preferences {
+    color: var(--baseBlack800);
+}
+.profileSection .collectionsCategoryOverview .collection.Preferences b{
+    font-weight: bold;
+    font-size: clamp(10px, 1.2rem, 1.8rem);
+}
+
+
+@media screen and (max-width: 500px) {
+    .profileSection{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        animation: slideLeftPosition 200ms linear forwards;
+    }
+}
+@media screen and (max-width: 800px) {
+    .profileSection{
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 3;
+        animation: slideRightPosition 200ms linear forwards;
+        animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+}
+
+
+
+
+@keyframes slideLeftPosition {
+    from{
+        left: 100vw;
+    }
+    to{
+        left: 0;
+        
+    }
+}
+@keyframes slideRightPosition {
+    from{
+        left: 100vw;
+    }
+    to{
+        left: calc(100vw - 350px);
+    }
+}

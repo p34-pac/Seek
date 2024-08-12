@@ -1,0 +1,34 @@
+.PlayListTypeTableHead{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.PlayListTypeTableHead::before{
+    content: "";
+    position: relative;
+    width: 200px;
+}
+.PlayListTypeTableHead.rightOption::before{
+    width: calc(200px - (32px + 10px));
+}
+.PlayListTypeTableHead.rightOption::after{
+    content: "";
+    position: relative;
+    width: 32px;
+    padding: 5px;
+}
+.PlayListTypeTableHead .headings{
+    width: calc(100% - 200px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.PlayListTypeTableHead.tabled4 .headings{
+    grid-template-columns: repeat(4, 1fr);
+}
+.PlayListTypeTableHead .headings b{
+    text-align: left;
+    color: var(--baseBlack1000);
+    font-size: clamp(15px, 1.5rem, 2rem);
+}

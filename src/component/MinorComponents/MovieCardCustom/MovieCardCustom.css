@@ -1,0 +1,9 @@
+.CastCrewsCard .content{
+    align-items: center;
+}
+.CastCrewsCard .content *{
+    color: var(--baseBlack1000) !important;
+}
+.CastCrewsCard .content .second{
+    color: var(--baseBlack700) !important;
+}

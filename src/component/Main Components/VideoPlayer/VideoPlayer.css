@@ -1,0 +1,173 @@
+
+.VideoPlayer {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    overflow: hidden;
+    position: sticky;
+    top: -50px;
+    z-index: 0;
+    flex: 1; /* Allows VideoPlayer to grow within its flex container */
+}
+
+.VideoPlayer .videoBox {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    padding-bottom: 0; /*16:9 aspect ratio*/
+    background-color: var(--baseBlack1000);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.VideoPlayer .videoBox > #youtube-player {
+
+    width: 100%;
+    max-width: unset;
+    height: 100% !important;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.VideoPlayer .videoBox .volume-control {
+    width: 10px;
+    z-index: 2;
+    position: relative;
+
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.VideoPlayer .videoBox .volume-control:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+.VideoPlayer .videoBox .volume-control .MediaRange{
+    width: 200px;
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 200px;
+}
+
+.VideoPlayer .timing {
+    width: calc(100% - 30px);
+    padding: 0 15px;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5vw;
+    color: var(--baseWhite1000);
+}
+.VideoPlayer .timing .current_to_total{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    gap: 10px;
+}
+.VideoPlayer .timing .MediaRange{
+    width: 100%;
+}
+
+.VideoPlayer .lower {
+    width: calc(100% - 20px);
+    padding: 10px;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    background-color: var(--baseBlack1000);
+    animation: toUp 300ms linear forwards;
+
+}
+.VideoPlayer .lower .extra {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.VideoPlayer .lower .extra .sizing {
+    width: 2rem;
+    height: 2rem;
+    max-width: 30vw;
+}
+.VideoPlayer .controls {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(5, 5, 5, 0.378);
+    backdrop-filter: grayscale(10%);
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: reveal 300ms linear forwards;
+}
+.VideoPlayer .divOverlay{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+.VideoPlayer .controls span{
+    width: 4rem;
+    height: 4rem;
+    max-width: 45px;
+    max-height: 45px;
+    cursor: pointer;
+}
+.VideoPlayer .controls span.Plause{
+    padding: 10px;
+    background-color: var(--baseWhite1000);
+    border-radius: 50%;
+
+}
+.VideoPlayer svg{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+@keyframes toUp {
+    from{
+        bottom: -50px;
+    }
+    to{
+        bottom: 0;
+    }
+}
+@keyframes reveal {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+@media screen and (max-height: 800px) {
+    .VideoPlayer{
+        width: 100%;
+        height: 500px;
+    }
+}
+@media screen and (min-width: 650px) {
+    .VideoPlayer .videoBox {
+        padding-bottom: 0; /*16:9 aspect ratio*/
+    }
+}
+
+

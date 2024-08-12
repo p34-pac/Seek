@@ -1,0 +1,212 @@
+.Home{
+    width: 100%;
+    height: 100%;
+    display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+.Home >main{
+    width: 100%;
+    height: calc(100vh - 50px);
+    overflow-y: scroll;
+    padding-bottom: 50px;
+
+}
+.Home .carousel{
+    position: sticky;
+    top: -100px;
+    z-index: 0;
+}
+.Home .section{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary200);
+    z-index: 1;
+    position: relative;
+    margin-top: 20px;
+    padding: 20px 0;
+    border-radius: 20px 20px 0 0 !important;
+}
+.Home .section .tabs {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 2px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 0;
+    list-style-type: none;
+    background-color: var(--primary700);
+}
+.Home .section .tabs li{
+    width: fit-content;
+    min-width: 5rem;
+    height: fit-content;
+    padding: 5px 15px;
+    background-color: var(--none);
+    font-size: clamp(15px, 1.2rem, 2rem);
+
+}
+.Home .section .tabs li.pres{
+    background-color: var(--primary600);
+    transition-duration: 200ms;
+    position: relative;
+    border-radius: 5px;
+
+}
+.Home .section .tabs li b{
+    width: fit-content;
+    font-weight: normal;
+    z-index: 0;
+    position: relative;
+}
+.Home .section .tabs li.pres::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary600);
+    border-radius: 5px;
+    
+}
+.Home .section section{
+    width: calc(100% - 20px);
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.Home .section .pagination {
+  width: 100vw;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.Home .section .pagination li {
+ width: fit-content;
+ height: fit-content;
+ padding: 5px 20px;
+ background-color: var(--primary600);
+ border-radius: 5px;
+ cursor: pointer;
+ font-weight: bolder;
+ color: var(--primary100);
+ position: relative;
+}
+.Home .section .pagination li.active{
+ background-color: var(--none);
+ overflow: hidden;
+
+}
+.Home .section .pagination li.active::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: var(--primary800);
+    animation: slide 200ms linear forwards;
+}
+@keyframes slide {
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
+}
+.Home .section .pagination li:active {
+    background-color: var(--primary700);
+    transform: scale(0.95);
+    user-select: none;
+}
+.Home .section section.forYou{
+    animation: slideLeft 300ms linear forwards;
+
+}
+.Home .section section.trending{
+    animation: slideLeft 300ms linear forwards;
+
+}
+.Home .section section > *{
+    flex-basis: 100px;
+    flex-grow: 1;  
+}
+.Home .section .tabs li.pres:first-child:before{
+    animation: enterFromLeft 300ms linear forwards;
+}
+.Home .section .tabs li.pres:first-child:before{
+    animation: enterFromRight 300ms linear forwards;
+}
+.Home .section .tabs li.pres:last-child:before{
+    animation: enterFromLeft 300ms linear forwards;
+}
+
+
+
+
+
+@keyframes slideLeft {
+    from{
+        transform: translateX(-100vw);
+        opacity: 0%;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 100%;
+        
+    }
+}
+
+@keyframes enterFromLeft {
+    from{
+        transform: translateX(-100px);
+    }
+    to{
+        transform: translateX(0);
+        
+    }
+    0%{
+        opacity: 100%;
+
+    }
+    99%{
+        opacity: 95%;
+    }
+}
+@keyframes enterFromRight {
+    from{
+        left: 100px;
+    }
+    to{
+        transform: translateX(0);
+        
+    }
+    0%{
+        opacity: 100%;
+
+    }
+    99%{
+        opacity: 95%;
+    }
+}
+
+

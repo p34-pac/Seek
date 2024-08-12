@@ -1,0 +1,56 @@
+#root {
+  max-width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+span, b, h1, h2, h3{
+  user-select: none;
+}
+
+
+
+
+#root > *:not(.Loader) > main {
+  all: unset;
+  width: calc(100%);
+  /* min-width: 100%; */
+  
+  height: fit-content;
+  max-height: 100%;
+  background-color: aliceblue;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0;
+  zoom: 70%;
+  padding: 0;
+  color: var(--baseBlack1000);
+  position: relative;
+  flex-grow: 1;
+
+}
+#root > *:not(.Loader) .profileSection{
+  width: 100%;
+  max-width: 350px;
+  min-width: 350px;
+  height: 100vh;
+}
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+  #root > *:not(.Loader) > main {
+      width: 100%;
+  }
+  #root > *:not(.Loader){
+    width: 100%;
+    display: block;
+  }
+}

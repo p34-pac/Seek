@@ -1,0 +1,20 @@
+.previousPage{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+}
+.previousPage i{
+    width: 24px;
+    height: 24px;
+}
+.previousPage i svg{
+    width: 100%;
+    height: 100%;
+}
+.previousPage b{
+    color: var(--baseBlack1000);
+    font-size: clamp(20px, 1rem, 2rem);
+}

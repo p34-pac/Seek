@@ -1,0 +1,64 @@
+.UserDp{
+    width: 100%;
+    max-width: 300px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px var(--primary500);
+    padding-bottom: 1rem;
+    background-color: var(--primary200);
+
+    
+}
+.UserDp .cover{
+    width: 100%;
+    height: 200px;
+    background-color: var(--primary800);
+    overflow: hidden;
+}
+.UserDp .userInfo{
+    width: fit-content;
+    height: fit-content;
+    color: var(--baseBlack1000);
+    margin-top: -50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.UserDp .userInfo .userDpPhoto{
+    width: 100px;
+    height: 100px;
+    background-color: var(--primary500);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.UserDp .userInfo .userDpPhoto span{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary800);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
+.UserDp .userInfo .userDpPhoto span svg{
+    width: 80%;
+    height: 80%;
+    
+}
+.UserDp .userInfo .userDpPhoto img, .UserDp .cover img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}

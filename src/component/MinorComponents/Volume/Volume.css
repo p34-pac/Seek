@@ -1,0 +1,32 @@
+  
+
+    section.volume .MediaRange>input[type="range"]:hover::-moz-range-thumb {
+
+        background-color: rgba(255, 255, 255, 0.872);
+
+      }
+
+      section.volume .MediaRange>input[type="range"]::-webkit-slider-thumb {
+        background-color: rgba(255, 255, 255, 0.872);
+      }
+  section.volume .MediaRange>input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 10px rgba(26, 255, 0, 0)
+  }
+  section.volume .MediaRange>input[type="range"]:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(26, 255, 0, 0)
+  }
+  section.volume .MediaRange>input[type="range"]:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(26, 255, 0, 0)
+  }
+  
+  /* Hover, active & focus Thumb: Firfox */
+  
+  section.volume .MediaRange>input[type="range"]::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 10px rgba(26, 255, 0, 0)
+  }
+  section.volume .MediaRange>input[type="range"]:active::-moz-range-thumb {
+    box-shadow: 0 0 0 13px rgba(26, 255, 0, 0)
+  }
+  section.volume .MediaRange>input[type="range"]:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 13px rgba(26, 255, 0, 0)    
+  }

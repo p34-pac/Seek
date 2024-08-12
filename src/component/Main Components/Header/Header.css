@@ -1,0 +1,115 @@
+.Header{
+    width: calc(100% - 40px);
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary500);
+    padding: 10px 20px;
+    position: sticky;
+    box-shadow: 0px 2px 5px var(--baseBlack700);
+    top: 0;
+    z-index: 3;
+}
+.Header .pageDetail {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Header .pageDetail .logo{
+    width: 5rem;
+    height: 5rem;
+    max-width: 10dvw;
+    max-height: 10dvw;
+    animation: reveal 200ms linear forwards;
+
+}
+.Header .pageDetail .logo svg{
+    width: 100%;
+    height: 100%;
+}
+.Header .pageDetail .back{
+    width: 30px;
+    height: 30px;
+    max-width: 10dvw;
+    max-height: 10dvw;
+    display: none;
+    animation: reveal 200ms linear forwards;
+
+}
+.Header .pageDetail .back svg{
+    width: 100%;
+    height: 100%;
+}
+
+.Header .userActions {
+    width: 40em;
+    max-width: calc(100% - 13dvw);
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2dvw;
+}
+.Header .userActions .dayTimeSwitch {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+.Header .userActions .dayTimeSwitch svg{
+    width: 32px;
+    height: 32px;
+    max-width: 7dvw;
+    max-height: 7dvw;
+    animation: reveal 200ms linear forwards;
+}
+.Header .userActions .searchInput {
+    width: 100%;
+    height: fit-content;
+}
+.Header .userActions .profile {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Header .userActions .profile .profileOpen {
+    width: 5rem;
+    height: 5rem;
+    max-width: 10dvw;
+    max-height: 10dvw;
+    background-color: var(--primary300);
+    border-radius: 50%;
+}
+
+
+@media screen and (max-width: 500px) {
+    .Header{
+        width: calc(100% - 20px);
+        padding: 10px 10px;
+    }
+    .Header .pageDetail.focused .back{
+        display: block;
+    }
+    .Header .pageDetail.focused .logo{
+        display: none;
+    }
+}
+
+@keyframes reveal {
+    from{
+        opacity: 0;
+        transform: scale(0.1) rotate(-180deg);
+    }
+    to{
+        opacity: 100%;
+        transform: scale(1) rotate(0);
+    }
+}

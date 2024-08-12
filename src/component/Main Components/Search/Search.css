@@ -1,0 +1,236 @@
+.search{
+    width: 100%;
+    height: fit-content;
+    position: relative;
+}
+.search ul{
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.search ul .input{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.search ul .input input{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: clamp(10px, 1rem, 1.5rem);
+    border: 2px solid var(--primary1000);
+    border-radius: 15px;
+    outline: none;
+    background-color: var(--none);
+    padding: 10px;
+    color: var(--primary1000);
+}
+.search ul .input input::placeholder{
+    color: var(--primary800);
+}
+
+.search ul .input button.searchGo{
+    width: 4.4rem;
+    height: 3.65rem;
+    max-width: 8dvw;
+    max-height: 8dvw;
+    background-color: var(--none);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: none;
+    padding: 5px;
+    border: 2px solid var(--primary1000);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.search ul .input button.searchGo svg{
+    width: 32px;
+    height: 32px;
+    max-width: 25px;
+    max-height: 25px;
+}
+.search ul .input input:focus,
+.search ul .input input:focus ~ button.searchGo{
+    border: 5px solid var(--primary1000);
+    transition-duration: 200ms;
+}
+
+
+
+/* suggestions */
+
+.search ul .searchSuggestion{
+    width: calc(100% - 20px);
+    min-width: 400px;
+    max-width: calc(100% - 22px) !important;
+
+    height: fit-content;
+    max-height: calc(100vh - 130px);
+    overflow-y:scroll;
+    border: 2px solid black;
+    background-color: var(--primary200);
+    color: var(--baseBlack1000);
+    position: absolute;
+    top: calc(100% + 15px);
+    left: 0;
+    border-radius: 15px;
+    padding: 10px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    animation: openSearchSuggestion 200ms linear forwards;    
+}
+.search ul .searchSuggestion ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.search ul .searchSuggestion .suggestion{
+    width: 100%;
+    height: fit-content;
+}
+li.ListContent{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+ li.ListContent b{
+    width: 100%;
+    text-align: left;
+    font-size: clamp(10px, 1.4rem, 2rem);
+    font-weight: normal;
+
+}
+ li.ListContent span{
+    width: 2rem;
+    height: 2rem;
+    max-width: 16px;
+    max-height: 16px;
+}
+ li.ListContent span svg{
+    width: 100%;
+    height: 100%;
+}
+
+.search ul .searchSuggestion .recent,
+.search ul .searchSuggestion .trending{
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+}
+.search ul .searchSuggestion .recent .top,
+.search ul .searchSuggestion .trending .top{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    
+}
+.search ul .searchSuggestion .recent .top b,
+.search ul .searchSuggestion .trending .top b{
+    font-size: clamp(18px, 1.5rem, 2rem);
+    font-weight: bolder;
+}
+.search ul .searchSuggestion .recent .top button,
+.search ul .searchSuggestion .trending .top button{
+    font-size: clamp(15px, 1.2rem, 1.8rem);
+    font-weight: normal;
+    background-color: var(--none);
+    outline: none;
+    border: none;
+    color: var(--baseBlack1000);
+}
+
+.search ul .searchSuggestion .recent ul,
+.search ul .searchSuggestion .trending ul{
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.search ul .searchSuggestion .recent li,
+.search ul .searchSuggestion .trending li{
+    width: calc(100% - 20px);
+    border-radius: 10px;
+    background-color: var(--primary500);
+    padding: 10px;
+    color: var(--baseWhite1000);
+}
+
+
+
+@keyframes openSearchSuggestion {
+    from{
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0px);
+        opacity: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .search{
+        position: static;
+    }
+    .search ul .input input:focus,
+    .search ul .input input:focus ~ button.searchGo{
+        border: 3px solid var(--primary1000);
+        transition-duration: 200ms;
+    }
+    .search ul .searchSuggestion{
+        width: 100%;
+        
+        min-width: calc(100vw - 20px);
+        max-width: unset;
+        height: calc(100vh - 75px);
+        zoom: calc(100% + 40%);
+        overflow-y: scroll;
+        position: absolute;
+        top: calc(45px);
+        border-radius: 0;
+    }
+    .search ul .input input{
+       
+        font-size: clamp(10px, 1rem, 1.5rem);
+        
+    }
+     li.ListContent b{
+        font-size: clamp(10px, 1rem, 1.5rem);
+    
+    }
+    .search ul .searchSuggestion .recent .top b,
+    .search ul .searchSuggestion .trending .top b{
+        font-size: clamp(10px, 1rem, 1.5rem);
+    }
+    .search ul .searchSuggestion .recent .top button,
+.search ul .searchSuggestion .trending .top button{
+    font-size: clamp(10px, 0.9rem, 1.5rem);
+    
+}
+}

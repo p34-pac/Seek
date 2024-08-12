@@ -1,0 +1,330 @@
+.VideoDescription {
+    width: 100%;
+    height: fit-content;
+    max-height: calc(100vh);
+    overflow: auto;
+    position: sticky;
+    padding-top: 0 !important;
+    z-index: 1;
+
+}
+
+.VideoDescription .descriptionTop {
+    width: calc( 100% - 20px);
+    padding: 10px;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 5px solid var(--primary1000);
+    background-color: var(--primary600);
+    z-index: 1;
+    position: sticky;
+    top: 0;
+}
+
+.VideoDescription .descriptionTop .sectionTitle {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.VideoDescription .descriptionTop .sectionTitle span{
+    font-size: clamp(18px, 1.5rem, 4dvw);
+    background-color: var(--primary200);
+    color: var(--primary1000);
+    padding: 5px 10px;
+    /* border-radius: 5px 5px 0 0; */
+    cursor: pointer;
+}
+.VideoDescription .descriptionTop .sectionTitle span[data-current=true]{
+    background-color: var(--primary1000);
+    color: var(--primary100);
+    transition-duration: 300ms;
+}
+
+.VideoDescription .descriptionTop .sectionActions{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.VideoDescription .descriptionTop span{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: clamp(15px, 1.2rem, 3dvw);
+    font-weight: bolder;
+    position: relative;
+}
+.VideoDescription .descriptionTop .sectionActions span{
+    background-color: var(--primary800);
+    color: var(--primary100);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.VideoDescription .descriptionTop .sectionActions span:hover::before{
+    content: '';
+    width: calc(85% - 18px);
+    height: 5px;
+    max-height: 10%;
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    background-color: var(--primary800);
+    border-radius: 30px;
+}
+.VideoDescription .descriptionTop .sectionActions span:hover::after{
+    content: '';
+    width: 7%;
+    min-width: 10px;
+    height: 5px;
+    max-height: 10%;
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    background-color: var(--primary800);
+    border-radius: 30px;
+}
+.VideoDescription .descriptionTop .sectionActions span:hover{
+    background-color: var(--primary500);
+    color: var(--primary1000);
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition-duration: 300ms;
+}
+.VideoDescription .descriptionTop .sectionActions span:hover svg path{
+    fill: var(--primary1000);
+    transition-duration: 300ms;
+    
+}
+.VideoDescription .descriptionTop svg{
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+
+
+
+
+
+
+
+
+
+.VideoDescription main.context {
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: flex-start;
+    justify-content: center;
+}
+.VideoDescription main.context > *{
+    width: 100%;
+    height: fit-content;
+    min-height: 100px;
+    max-height: 80vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    position: relative;
+    position: sticky;
+    top: 55px;
+    background-color: var(--primary100);
+    z-index: 0;
+}
+
+.VideoDescription main.context > * > h1{
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: var(--primary600);
+    color: var(--primary100);
+    padding: 10px;
+    z-index: 0;
+    width: calc(100% - 20px);
+
+}
+.VideoDescription main.context > * > h1, .VideoDescription main.context > *  h3{
+    margin: 0;
+    text-align: left;
+    z-index: 1;
+}
+.VideoDescription main.context > *  h3{
+    font-weight: normal;
+    z-index: 0;
+
+}
+.VideoDescription main.context > .peoples{
+    width: calc(100%);
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    z-index: 1;
+    /* padding-bottom: 50px; */
+
+}
+
+.VideoDescription main.context > .peoples .staring,
+.VideoDescription main.context > .peoples .crews{
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--primary1000);
+    /* scroll-snap-align: start; */
+
+}
+.VideoDescription main.context > .peoples .staring .casts,
+.VideoDescription main.context > .peoples .crews .crewsList{
+    margin: 0;
+    width: calc(100% - 20px);
+    padding: 5px 10px;
+    border-radius: 10px;
+
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    list-style-type: none;
+
+}
+.VideoDescription main.context > .peoples .staring .casts li,
+.VideoDescription main.context > .peoples .crews .crewsList li{
+    scroll-snap-align: start;
+    z-index: 0;
+}
+.VideoDescription main.context > .peoples .staring .casts li .MovieCard .content b,
+.VideoDescription main.context > .peoples .crews .crewsList li .MovieCard .content b{
+    font-size: clamp(10px, 1.5rem, 1.8rem);
+    color: var(--baseBlack1000);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    max-height: calc(1.5em * 2); /* Adjust to the number of lines */
+}
+.VideoDescription main.context > .description{
+    width: calc(100% - 5px);
+    min-height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    scroll-snap-type: none;
+
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    border-left: 5px solid var(--primary600);
+}
+.VideoDescription main.context > .description .descriptionBody{
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    padding-bottom: 20px;
+    height: fit-content;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    
+}
+.VideoDescription main.context > .description .descriptionBody > *{
+    margin: 0;
+    padding: 0;
+    font-size: clamp(15px, 1.2rem, 1.8rem);
+    text-align: justify;
+}
+.VideoDescription main.context > .recommend{
+    width: calc(100% - 20px);
+    padding: 0 10px;
+    padding-bottom: 20px;
+
+    height: fit-content;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 0;
+    scroll-padding: 10px;
+    border-left: 5px solid var(--primary600);
+    
+}
+.VideoDescription main.context > .recommend::before{
+    content: '';
+    position: relative;
+    width: 100%;
+    height: 10px;
+}
+.VideoDescription main.context > .recommend > *{
+    scroll-snap-align: start;
+    width: 100%;
+    max-width: calc(100% - 20px);
+}
+
+
+@media screen and (max-width: 500px) {
+    .VideoDescription .descriptionTop .sectionTitle span{
+        font-size: 4dvw;
+    }
+    .VideoDescription .descriptionTop span{
+        font-size: 3dvw;
+    }
+
+    .VideoDescription main.context {
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 0;
+    }
+    
+    .VideoDescription main.context > .description{
+        border-left: none;
+        width: calc(100%);
+        min-height: fit-content;
+        
+    }
+    .VideoDescription main.context > .recommend{
+        border-left: none;
+        width: calc(100% - 20px);
+    }
+}
+@media screen and (max-width: 390px) {
+    .VideoDescription .descriptionTop {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+    .VideoDescription .descriptionTop span{
+        width: 100%;
+    }
+    .VideoDescription .descriptionTop .sectionActions,
+    .VideoDescription .descriptionTop .sectionTitle{
+        width: 100%;
+    }
+}

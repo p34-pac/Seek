@@ -1,0 +1,150 @@
+.SearchPaged{
+    width: calc(100%);
+    height: fit-content;
+    
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+    /* gap: 20px; */
+
+}
+
+.SearchPaged >main{
+    width: 100%;
+    height: calc(100vh - 50px);
+    padding-bottom: 50px;
+    overflow-y: scroll;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+.SearchPaged .result, .SearchPaged .mayLike {
+    width: calc(100% - 20px);
+    padding: 10px;
+    height: fit-content;
+    /* max-height: calc(100vh - 50px); */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--primary100);
+    gap: 20px;
+}
+.SearchPaged h1{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    color: var(--primary500);
+    font-size: clamp(1.5rem, 2vw + 1rem, 3rem);
+    position: sticky;
+    top: 0;
+    
+    
+}
+.SearchPaged h1 .textSearched {
+    color: var(--primary800);
+    font-size: clamp(1.5rem, 2vw + 1rem, 3rem);
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: calc(3em * 1);
+    max-width: 40vw;
+}
+
+
+.SearchPaged .result > .resultCategory section, .SearchPaged .mayLike section{
+    width: calc(100%);
+    height: fit-content;
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /* flex-direction: column; */
+    flex-wrap: nowrap;
+    overflow: scroll;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+}
+.SearchPaged .result > .resultCategory, .SearchPaged .mayLike > .resultCategory{
+    width: calc(100% - 20px);
+    padding: 20px 10px;
+    height: fit-content;
+    /* max-height: calc(100vh - 50px); */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: var(--primary200);
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 10px var(--primary500),
+                inset -2px -2px 10px var(--primary500);
+}
+.SearchPaged .result > .resultCategory h1, .SearchPaged .mayLike > .resultCategory h1{
+    color: var(--baseBlack1000);
+    font-size: clamp(1.5rem, 2vw + 1rem, 3rem);
+    margin: 0;
+    margin-bottom: 20px;
+}
+.SearchPaged section .MovieCard{
+    min-width: 250px;
+    scroll-snap-align: start;
+
+    align-self: stretch;
+
+}
+.SearchPaged section .MovieCard.shrink{
+    height: 100px;
+    border: none;
+    justify-content: space-between;
+    
+}
+.SearchPaged section .MovieCard.shrink > *{
+    max-height: 100px;
+}
+.SearchPaged section .MovieCard.shrink > .Thumbnailing{
+    max-width: 30%;
+}
+.SearchPaged section .MovieCard.shrink > .content{
+    min-height: calc(100px - 10px) !important;
+    width: 70%;
+    padding: 5px 5px;
+    justify-content: space-between;
+}
+.SearchPaged section .MovieCard.shrink *{
+    font-size: clamp(10px, 1rem, 1.5rem) !important;
+}
+.SearchPaged section .MovieCard.shrink .icon{
+    width: 1.2rem;
+    max-width: 24px;
+}
+.SearchPaged section .MovieCard > .content .second {
+    color: var(--baseBlack1000);
+    font-size: clamp(1rem, 1.2rem, 1.5rem);
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: calc(1.5em * 1);
+    max-width: 40vw;
+}
+
+
+
+@media screen and (max-width: 500px) {
+    .SearchPaged h1{
+        
+        font-size: clamp(20px, 1.5rem, 2rem);
+    }
+}
