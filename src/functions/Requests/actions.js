@@ -150,10 +150,22 @@ export class StorageManager {
   }
 
   async encryptData(data) {    
-    if(await SECRET()){
-      console.log(await SECRET());
-      
-      return CryptoJS.AES.encrypt(data, await SECRET()).toString();
+    
+    try {
+      if(await SECRET()){
+        console.log(await SECRET());
+        
+        return CryptoJS.AES.encrypt(data, await SECRET()).toString();
+      }
+    } catch (error) {
+      try {
+        cookies.remove('secret-key')
+        if(localStorage.getItem(this.storage)){
+          localStorage.removeItem(this.storage)
+        }
+      } catch (error) {
+        return
+      }
     }
   }
 
@@ -168,6 +180,14 @@ export class StorageManager {
 
     } catch (error) {
       console.error('Error decrypting data:', error);
+      try {
+        cookies.remove('secret-key')
+        if(localStorage.getItem(this.storage)){
+          localStorage.removeItem(this.storage)
+        }
+      } catch (error) {
+        return
+      }
       return []; // Return an empty array if decryption fails
     }
   }
