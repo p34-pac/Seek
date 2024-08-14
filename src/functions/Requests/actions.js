@@ -161,7 +161,7 @@ export class StorageManager {
       }
 
     } catch (error) {
-      console.error('Error decrypting data:');
+      console.error('Error decrypting data:', error);
       return []; // Return an empty array if decryption fails
     }
   }
