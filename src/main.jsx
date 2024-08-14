@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 // import { register } from './serviceWorkerRegistration';
 import { generateKey, storeKeyInCookie, userProfile } from './functions/Requests/actions.js'
 import UserContextProvider from './UserContext.jsx'
+import MyErrorBoundary from './pages/ErrorBoundary/ErrorBoundary.jsx'
 
 
 // Generate and store the key
@@ -42,7 +43,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
         <UserContextProvider def={defUser}>
-          <App />
+          <MyErrorBoundary>
+            <App />
+          </MyErrorBoundary>
         </UserContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
