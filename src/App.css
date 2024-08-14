@@ -4,6 +4,7 @@
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  background-color: var(--primary100);
 }
 span, b, h1, h2, h3{
   user-select: none;
