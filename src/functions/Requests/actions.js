@@ -16,6 +16,7 @@ export async function storeKeyInCookie(key) {
 
   if(cookies.get('secret-key')){
     console.log("secret-key exists in cookies");
+    return
   }else{
     cookies.set('secret-key', key, { path: '/' });
     console.log("secret-key created");
