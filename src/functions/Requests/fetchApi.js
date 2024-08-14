@@ -86,7 +86,6 @@ class TMDBClient {
     async fetchVariousGenreRecommendations(genres){
         
         const genreTypes = ['movie', 'tv'];
-        // const genrePromises = genreTypes.map(type => this.fetchGenres(type));
         let mixedRec = []
         genreTypes.map(type => {
             genres.forEach(genre => {

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Profile.css'
 import UserDp from '../../MinorComponents/UserDp/UserDp'
 import Collection from '../../MinorComponents/Collection/Collection'
@@ -8,35 +8,44 @@ import MovieCard from '../MovieCard/MovieCard'
 import ActionWithIcon from '../../MinorComponents/ActionWithIcon/ActionWithIcon'
 import { AngleLeftIcon, AngleRightIcon } from '../../asset component/Icons/Icons'
 import {userProfile } from '../../../functions/Requests/actions'
+import { UserContext } from '../../../UserContext'
 
 
+const defActions = [
+    {
+        name:'delete',
+        action: ()=>{return},
+    },
+    {
+        name:'save',
+        action: ()=>{return},
+    }
+]
 
 
-function CollectionCardAction({fill='var(--primary100)'}) {
+function CollectionCardAction({fill='var(--primary100)', actions=defActions}) {
   return (
     <>
-        <ActionWithIcon icon={<AngleRightIcon fill={fill}/>}>Download</ActionWithIcon>
-        <ActionWithIcon icon={<AngleRightIcon fill={fill}/>}>save</ActionWithIcon>
-        <ActionWithIcon icon={<AngleRightIcon fill={fill}/>}>share</ActionWithIcon>
+        {
+            actions.map(i=>{
+                return(
+                    <ActionWithIcon onClick={()=>i.action()} key={i.name} icon={<AngleRightIcon fill={fill}/>}>{i.name}</ActionWithIcon>
+                )
+            })
+        }
     </>
   )
 }
 
 
 function Profile({closeProfile}) {
-    const [profile, setProfile] = useState(null)
     const [collections, setCollections] = useState(null)
+    const {user, setUser} = useContext(UserContext)
     useEffect(() => {
-      async function initiateProfile() {
-        setProfile(await userProfile.getFromStorage().then(res => JSON.parse(res)));
-      }
-      initiateProfile()
-    }, [])
-    useEffect(() => {
-        if(profile){
-            setCollections(profile.userCollections);
+        if(user.id){
+            setCollections(user.userCollections);
         }
-      }, [profile])
+      }, [user])
 
 
     function GetTime({full}){
@@ -66,7 +75,7 @@ function Profile({closeProfile}) {
     <>
         <section className='profileSection'>
         <span className="back"><i onClick={()=>closeProfile()}><AngleLeftIcon fill='var(--baseWhite1000)'/></i></span>
-        <UserDp userInfo={profile}/>
+        <UserDp userInfo={user}/>
         <div className="collectionsCategoryOverview">
             <Collection seeAllLink="/playlists" className="Downloads" CollectionName='Downloads'>
                 <MovieCard play={false} optionDrop={false} shrink={true} />

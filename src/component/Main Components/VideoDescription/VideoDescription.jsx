@@ -11,6 +11,7 @@ import { BACKDROP_SIZE, IMAGE_BASE_URL, splitBySlash, tmdbAction } from '../../.
 import { useNavigate } from 'react-router-dom'
 import { LoadingComponent } from '../../asset component/Loader/Loader'
 import AddToCollection from '../../MinorComponents/AddToCollection/AddToCollection'
+import Modal from '../../MinorComponents/Modal/Modal'
 
 function VideoDescription({videoInfo}) {
     const [selectTab, setSelectTab] = useState("description")
@@ -49,25 +50,21 @@ function VideoDescription({videoInfo}) {
         return(
             type.map((person, index)=>{
                 return (
-                    <>
-                        {
-                            index<10?
-                                person.character?
-                                    person.character.includes("/")?
-                                        splitBySlash(person.character).map((role, index)=>{
-                                            return <li key={index}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={role}/></li>
-                                        })
-                                    :<li key={index}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={person.character}/></li>
-                                :person.job?
-                                    person.job.includes("/")?
-                                        splitBySlash(person.job).map((role, ind)=>{
-                                            return <li key={`${index}${ind}`}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={role}/></li>
-                                        })
-                                    :<li key={index}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={person.job}/></li>
-                                :null
-                            :null
-                        }
-                    </>
+                    index<10?
+                        person.character?
+                            person.character.includes("/")?
+                                splitBySlash(person.character).map((role, index)=>{
+                                    return <li key={index}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={role}/></li>
+                                })
+                            :<li key={index}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={person.character}/></li>
+                        :person.job?
+                            person.job.includes("/")?
+                                splitBySlash(person.job).map((role, ind)=>{
+                                    return <li key={`${index}${ind}`}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={role}/></li>
+                                })
+                            :<li key={index}><CastCrewsCard img={person.profile_path?IMAGE_BASE_URL+BACKDROP_SIZE[0]+person.profile_path:null} person={person.name} position={person.job}/></li>
+                        :null
+                    :null
                 )
             })
         )
@@ -80,6 +77,11 @@ function VideoDescription({videoInfo}) {
         a.click()
     }
 
+    useEffect(() => {
+      console.log(collectionPopUp);
+      
+    }, [collectionPopUp])
+    
 
 
   return (
@@ -147,9 +149,7 @@ function VideoDescription({videoInfo}) {
                     <section className="recommend">
                         {
                             recommendations?recommendations.map((recommendation, index)=>{
-                                return <>
-                                    {
-                                        index<20?
+                                return index<20?
                                             <MovieCard key={index} 
                                                 imgSrc={IMAGE_BASE_URL+BACKDROP_SIZE[0]+recommendation.backdrop_path}
                                                 text1={recommendation.title}
@@ -158,8 +158,6 @@ function VideoDescription({videoInfo}) {
                                                 onClick={()=>goTo(`?title=${encodeURIComponent(recommendation.title)}`)}
                                             />
                                         :null
-                                    }
-                                </>
                             }):null
                         }
                     </section>
@@ -169,7 +167,9 @@ function VideoDescription({videoInfo}) {
         
     </div>
     {
-        collectionPopUp?<AddToCollection item={videoInfo} cancel={()=>setCollectionPopUp(false)} />:null
+        collectionPopUp?<Modal defaultCancel={false} shown={collectionPopUp}>
+            <AddToCollection item={videoInfo} cancel={()=>setCollectionPopUp(false)} />
+        </Modal>:null
     }
     </>
     

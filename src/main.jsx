@@ -4,16 +4,17 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
-import { register } from './serviceWorkerRegistration';
-import { generateKey, storeKeyInCache, userProfile } from './functions/Requests/actions.js'
+// import { register } from './serviceWorkerRegistration';
+import { generateKey, storeKeyInCookie, userProfile } from './functions/Requests/actions.js'
+import UserContextProvider from './UserContext.jsx'
 
 
 // Generate and store the key
 generateKey().then(key => {
-  storeKeyInCache(key).then(() => console.log('Secret key stored in cache.'));
+  storeKeyInCookie(key).then(() => console.log('Secret key stored in cookie.'));
 });
 export const defUser = {
-  id: 1,
+  id: null,
   name: 'John Doe',
   email: 'john.doe@example.com',
   userCollections: [],
@@ -21,8 +22,16 @@ export const defUser = {
   favoriteGenres: [],
 }
 if(!localStorage.getItem('user')){
+  const defaultUse = {
+    id: 1,
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    userCollections: [],
+    searchHistory: [],
+    favoriteGenres: [],
+  }
   
-  userProfile.setToStorage(defUser).then(res => console.log(res))
+  userProfile.setToStorage(defaultUse).then(res => console.log(res))
 }
 
 
@@ -32,11 +41,12 @@ if(!localStorage.getItem('user')){
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      
-        <App def={defUser} />
+        <UserContextProvider def={defUser}>
+          <App />
+        </UserContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
 )
 
 // Register the service worker
-register();
+// register();

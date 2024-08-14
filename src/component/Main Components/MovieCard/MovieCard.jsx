@@ -22,7 +22,7 @@ function DefAction({fill='var(--baseBlack1000)'}){
 }
 
 
-function MovieCard({className="", children=<DefAction fill='var(--baseBlack1000)'/>, imgSrc=false, imgAlt, onClick,onMouseEnter, onMouseLeave, bottom=true, rating=true, icon=<DownloadDuotoneIcon fill='var(--baseWhite800)'/>, text1="Movie name", text2="Movie starrings", text3="date", text4="Extra", before=true,optionDrop=true, optionDropOnRight=false, verticalAlign=false, shrink=false, play=true, tabled3=false, tabled4=false}) {
+function MovieCard({className="", children, imgSrc=false, imgAlt, onClick,onMouseEnter, onMouseLeave, bottom=true, rating=true, icon=<DownloadDuotoneIcon fill='var(--baseWhite800)'/>, text1="Movie name", text2="Movie starrings", text3="date", text4="Extra", before=true,optionDrop=true, optionDropOnRight=false, verticalAlign=false, shrink=false, play=true, tabled3=false, tabled4=false}) {
     const MovieCardClassName = classNames(`MovieCard`, {
         tabled3,
         tabled4,
@@ -56,7 +56,7 @@ function MovieCard({className="", children=<DefAction fill='var(--baseBlack1000)
             {
                 (verticalAlign||optionDropOnRight!==true)&&optionDrop?
                     <OtherOptions>
-                        {ActionWithIcon}
+                        {children}
                     </OtherOptions>
                 :null
             }

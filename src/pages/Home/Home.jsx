@@ -10,6 +10,8 @@ import Profile from '../../component/Main Components/Profile/Profile'
 import { BACKDROP_SIZE, generateArrayOfRandomNumbers, IMAGE_BASE_URL, range } from '../../functions/Requests/actions'
 import { GenraMap3 } from '../../component/MinorComponents/GenreMap/GenreMap'
 import { useNavigate } from 'react-router-dom'
+import Modal from '../../component/MinorComponents/Modal/Modal'
+import AddToCollection from '../../component/MinorComponents/AddToCollection/AddToCollection'
 
 
 function image(path){
@@ -31,20 +33,31 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
             <section className="forYou">
             {
                 forYouArray.map((forYou, index) => {
-                   return <>
-                        {
-                            index <= ((forYouArray.length-1)/page.maxPage)*page.page && index >= ((forYouArray.length-1)/page.maxPage)*(page.page-1)? 
-                             <MovieCard text1={forYou.title}
-                                    text2={<GenraMap3 genreList={forYou.genre_names} />}
-                                    text3={forYou.release_date?forYou.release_date:forYou.first_air_date?forYou.first_air_date:null}
-                                    imgSrc={forYou.poster_path?image(forYou.poster_path):forYou.backdrop_path?image(forYou.backdrop_path):null}
-                                    key={forYou.title+forYou.id+index}
-                                    verticalAlign={isLessThan500}
-                                    onClick={()=> navigate(`/video?title=${forYou.title}`)}
-                                    />
-                            :null
-                        }
-                    </>
+                    return (
+                        
+                            index <= ((forYouArray.length - 1) / page.maxPage) * page.page &&
+                            index >= ((forYouArray.length - 1) / page.maxPage) * (page.page - 1) ? (
+                            <MovieCard
+                                text1={forYou.title}
+                                text2={<GenraMap3 genreList={forYou.genre_names} />}
+                                text3={
+                                forYou.release_date ||
+                                forYou.first_air_date ||
+                                null
+                                }
+                                imgSrc={
+                                forYou.poster_path
+                                    ? image(forYou.poster_path)
+                                    : forYou.backdrop_path
+                                    ? image(forYou.backdrop_path)
+                                    : null
+                                }
+                                key={`${forYou.title}${forYou.id}${index}`}
+                                verticalAlign={isLessThan500}
+                                onClick={() => navigate(`/video?title=${forYou.title}`)}
+                            />
+                            ) : null
+                        )
                 })
             }
 
@@ -93,10 +106,12 @@ function Home({forYou}) {
       }, [])
       useEffect(() => {
         // setMaxPage((forYou.length-1)/10)
-        if(Math.round(((forYou.length-1)/10))%2 == 0){
-            setMaxPage(Math.round(((forYou.length-1)/10)))
-        }else{
-            setMaxPage(Math.round(((forYou.length-1)/10))+1)
+        if(forYou){
+            if(Math.round(((forYou.length-1)/10))%2 == 0){
+                setMaxPage(Math.round(((forYou.length-1)/10)))
+            }else{
+                setMaxPage(Math.round(((forYou.length-1)/10))+1)
+            }
         }
         
       }, [forYou])
@@ -130,6 +145,7 @@ function Home({forYou}) {
                 :null
             }   
     </div>
+    
     
     </>
   )

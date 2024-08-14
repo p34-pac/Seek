@@ -11,7 +11,6 @@
     height: calc(100vh - 50px);
     overflow-y: scroll;
     padding-bottom: 50px;
-
 }
 .Home .carousel{
     position: sticky;

@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './AddToCollection.css'
-import { filterArray, updateUserProperty, userProfile } from '../../../functions/Requests/actions'
+import { filterArray, generateCollageSrc, updateArray, updateUserProperty, userProfile } from '../../../functions/Requests/actions'
 import { AddIcon, CancelIcon, TrashDuotoneIcon, TrashIcon } from '../../asset component/Icons/Icons'
+import { UserContext } from '../../../UserContext'
+import { toast } from 'react-toastify'
 
 
 function NewCollection({cancel, create, allCollection}){
@@ -41,26 +43,17 @@ function NewCollection({cancel, create, allCollection}){
 
 function AddToCollection({item="what is the item name", cancel}) {
     const [collections, setCollections] = useState([])
-    const [uniqueCollections, setUniqueCollections] = useState([])
+    const [updatedCollections, setUpdatedUniqueCollections] = useState(null)
     const [selectedCollection, setSelectedCollection] = useState('')
     const details = useRef(null)
     const [showNewCollection, setShowNewCollection] = useState(false)
-    const [profileData, setProfileData] = useState(null)
+    const {user, setUser} = useContext(UserContext)
 
 
 
     useEffect(() => {
-        async function getUserCollections(){
-            const profile = await userProfile.getFromStorage().then(res => JSON.parse(res))
-            
-            setCollections(profile.userCollections);
-            setProfileData(profile);
-        }
-        
-
-        getUserCollections()
-      
-    }, [])
+        setCollections(user.userCollections)    
+    }, [user])
 
     
     // close the details
@@ -70,31 +63,21 @@ function AddToCollection({item="what is the item name", cancel}) {
     //     }
     // }, [selectedCollection])
     useEffect(() => {
-        
-
-
-        setUniqueCollections(filterArray(collections))
-    }, [collections])
-    useEffect(() => {
-        setShowNewCollection(false)
-        
-        if(uniqueCollections&&profileData){
-            const updateUserCollection = updateUserProperty(profileData, 'userCollections', uniqueCollections)
-            
-            userProfile.setToStorage(updateUserCollection)
-
-            if(uniqueCollections.length>0){
-                setSelectedCollection(uniqueCollections[0].name)
-            }else{
-                setSelectedCollection("")
-            }
+        console.log(collections);
+        if(collections.length>0){  
+            setSelectedCollection(collections[0].name)
+        }else{
+            setSelectedCollection("")
         }
-    }, [uniqueCollections])
+    }, [collections])
+   
+        
+    
+        
 
     function createNewCollection(collectionName){
         let newDate = new Date()
         
-        // create new collection object
         let newCollection = {
             name: collectionName,
             items: [],
@@ -103,51 +86,67 @@ function AddToCollection({item="what is the item name", cancel}) {
             date:newDate,
         }
 
-        if (!collections.find(i => i.name === collectionName)) {
-            collections.push(newCollection);
-            setCollections(prev => ([newCollection, ...prev]))
+        if (collections&&!collections.find(i => i.name === collectionName)) {
+            let updated = updateArray(collections, newCollection)
+            
+            let updateUser = updateUserProperty(user, 'userCollections', updated)
+            setUser(updateUser)     
+            setShowNewCollection(false)
           } else {
             return
           }
     }
-    function handleAddToCollection(collectionName){
-        
-        const updatedCollections = collections.map(collection => {
+    async function handleAddToCollection(collectionName){
+        const updatedCollections = collections.map(async collection => {
             if (collection.name === collectionName) {
-              return { ...collection, items: [...collection.items, item] };
+              if(collection.items&&!collection.items.find(i => i.id == item.id)){
+                if(collection.collectionThumbnail=="https://via.placeholder.com/150"||collection.items.length>0){
+                    const img = await generateCollageSrc(collection.items)
+                    toast.success(`"${item.title}" added to ${collectionName}`)
+                    return { ...collection, collectionThumbnail: img, items: [...collection.items, item] };
+                }
+                
+              }else{
+                toast.error(`"${item.title}" already exists in ${collectionName}`)
+                
+              }
             }
             return collection;
-          });
+          });     
+
+        const result = await Promise.all(updatedCollections)
+          
+        const updateUserCollection = updateUserProperty(user, 'userCollections', result)
+          
+        setUser(updateUserCollection)            
 
           
-          const updateUserCollection = updateUserProperty(profileData, 'userCollections', filterArray(updatedCollections))
-
-          
-          userProfile.setToStorage(updateUserCollection);
-          cancel()
+        cancel()
     }
     function deleteFromCollection(item){
-        let withoutItem = uniqueCollections.filter(i => i.name !== item.name)
-        setUniqueCollections(withoutItem)
+        let withoutItem = collections.filter(i => i.name !== item.name)
+        const updateUserCollection = updateUserProperty(user, 'userCollections', withoutItem)
+
+        setUser(withoutItem)
         
         
     }
     
   return (
-    <div className='AddToCollection'>
+    <>
         {
             showNewCollection?
-            <NewCollection allCollection={uniqueCollections} cancel={()=>setShowNewCollection(false)} create={(val)=>{createNewCollection(val);setSelectedCollection(val.name)}}/>
+            <NewCollection allCollection={collections} cancel={()=>setShowNewCollection(false)} create={(val)=>{createNewCollection(val);setSelectedCollection(val.name)}}/>
             :<div className="collectionListing">
                 <b>add {`"${item.title}"`} to</b>
                 <details ref={details}>
-                <summary className={selectedCollection==""&&!uniqueCollections.length>0?'new':""} onClick={()=>selectedCollection==''?setShowNewCollection(true):null}>{selectedCollection==''&&!uniqueCollections.length>0?'Create new collection':selectedCollection==''?"Choose collection":selectedCollection}</summary>
+                <summary className={selectedCollection==""&&!collections.length>0?'new':""} onClick={()=>selectedCollection==''?setShowNewCollection(true):null}>{selectedCollection==''&&!collections.length>0?'Create new collection':selectedCollection==''?"Choose collection":selectedCollection}</summary>
                     {
-                        uniqueCollections.length>0?
+                        collections.length>0?
                             <ul className="collections">
                                 <li className='new' onClick={()=>setShowNewCollection(true)}>Create new collection</li>
                                 {
-                                    uniqueCollections.map((i, index)=>{
+                                    collections.map((i, index)=>{
                                         return <li className={i.name==selectedCollection?'collectionItem selected':'collectionItem'} key={index}>
                                                     <b onClick={()=>setSelectedCollection(i.name)}>{i.name}</b>
                                                     <div className="end">
@@ -171,8 +170,7 @@ function AddToCollection({item="what is the item name", cancel}) {
                 </div>
             </div>
         }
-
-    </div>
+    </>
   )
 }
 

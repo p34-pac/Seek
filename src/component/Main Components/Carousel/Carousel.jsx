@@ -24,30 +24,30 @@ function Carousel({images}) {
 
     
   return (
-    <div className="carousel">
-    <div className="carousel-inner" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-      {images.map((image, index) => (
-        <div className="carousel-item" key={index}>
-          <img src={image.src} alt={`Slide ${index}`} />
-        </div>
-      ))}
-    </div>
-    <button className="carousel-control prev" onClick={handlePrevClick}>
-        <AngleLeftIcon fill='var(--baseWhite1000)'/>
-    </button>
-    <button className="carousel-control next" onClick={handleNextClick}>
-        <AngleRightIcon fill='var(--baseWhite1000)'/>
-    </button>
-    <div className="carousel-indicators">
-      {images.map((_, index) => (
-        <span
-          key={index}
-          className={`indicator ${index === currentIndex ? 'active' : ''}`}
-          onClick={() => handleIndicatorClick(index)}
-        ></span>
-      ))}
-    </div>
-  </div>
+    <section className="carousel">
+      <div className="carousel-inner" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+        {images.map((image, index) => (
+          <div className="carousel-item" key={index}>
+            <img src={image.src} alt={`Slide ${index}`} />
+          </div>
+        ))}
+      </div>
+      <button className="carousel-control prev" onClick={handlePrevClick}>
+          <AngleLeftIcon fill='var(--baseWhite1000)'/>
+      </button>
+      <button className="carousel-control next" onClick={handleNextClick}>
+          <AngleRightIcon fill='var(--baseWhite1000)'/>
+      </button>
+      <div className="carousel-indicators">
+        {images.map((_, index) => (
+          <span
+            key={index}
+            className={`indicator ${index === currentIndex ? 'active' : ''}`}
+            onClick={() => handleIndicatorClick(index)}
+          ></span>
+        ))}
+      </div>
+    </section>
   )
 }
 

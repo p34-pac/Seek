@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 
+import Cookies from "universal-cookie";
 import { tmdbClient } from "./fetchApi";
 import CryptoJS from 'crypto-js';
 
@@ -10,45 +11,31 @@ export async function generateKey() {
 }
 
 // Function to store the key in the cache
-export async function storeKeyInCache(key) {
-  const cache = await caches.open('secret-key-cache');
+export async function storeKeyInCookie(key) {
+  const cookies = new Cookies()
 
-  let response = cache.match("secret-key")
-  response.then(exists => {
-    if(exists){
-      console.log("secret-key exists");
-    }else{
-      cache.put('secret-key', new Response(key));
-      console.log("secret-key created");
-
-
-    }
-  })
+  if(cookies.get('secret-key')){
+    console.log("secret-key exists in cookies");
+  }else{
+    cookies.set('secret-key', key, { path: '/' });
+  }
 }
 
 
 // Function to retrieve the key from the cache
-async function getKeyFromCache() {
-  const cache = await caches.open('secret-key-cache');
-  const response = await cache.match('secret-key');
-  if (response) {
-    const key = await response.text();
-    return key;
-  } else {
-    throw new Error('Secret key not found in cache.');
+function getKeyFromCookie() {
+  const cookie = new Cookies()
+  if(cookie.get('secret-key')){
+    return cookie.get('secret-key')
+  }else{
+    return
   }
+
 }
-export const  SECRET = async ()=>{
+export const  SECRET = ()=>{
   // Retrieve the key and use it
-    try {
-      return await getKeyFromCache().then(key => {
-        return key
-      }).catch(error => {
-        console.error('Error retrieving secret:');
-      });
-    } catch (error) {
-      return
-    }
+  return getKeyFromCookie()
+  
 }
 
 
@@ -160,13 +147,15 @@ export class StorageManager {
   }
 
   async encryptData(data) {
-    return CryptoJS.AES.encrypt(JSON.stringify(data), await SECRET()).toString();
+
+    return CryptoJS.AES.encrypt(JSON.stringify(data), SECRET()).toString();
   }
 
   async decryptData(ciphertext) {
     try {
-      if(await SECRET()){
-        const bytes = CryptoJS.AES.decrypt(ciphertext, await SECRET());
+      if(SECRET()){
+        const bytes = CryptoJS.AES.decrypt(ciphertext, SECRET());
+        
         const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
         return decryptedData ? JSON.parse(decryptedData) : []; // Return an empty array if data is invalid
       }

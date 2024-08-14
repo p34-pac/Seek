@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { createContext, Suspense, useContext, useEffect, useState } from 'react'
 
 import './App.css'
 import { ToastContainer } from 'react-toastify';
@@ -12,8 +12,11 @@ import { generateShades, parseColorsToCssVar } from './functions/colorgenerator'
 import Home from './pages/Home/Home';
 import Header from './component/Main Components/Header/Header';
 import Profile from './component/Main Components/Profile/Profile';
-import { tmdbClient } from './functions/Requests/fetchApi';
+import { getMoviesWithGenreNames, tmdbClient } from './functions/Requests/fetchApi';
 import { generateArrayOfRandomNumbers, generateCollageSrc, getRandomValues, updateUserProperty, userProfile } from './functions/Requests/actions';
+import UserContextProvider, { UserContext } from './UserContext';
+import Modal from './component/MinorComponents/Modal/Modal';
+import { ArrowRightIcon } from './component/asset component/Icons/Icons';
 
 function setColor(){
   let primary = generateShades("#2E0245")
@@ -55,25 +58,95 @@ async function generateRandomGenre(genres, amount=6){
   let myGenres = getRandomValues(genres, amount)
   return myGenres
 }
-async function saveGenres(userProf){
-  console.log(userProf);
 
-  const allGeneres = await getGenre()
-  const toSave = await generateRandomGenre(allGeneres)
+function GenreListing({save, skip}){
+  const [availableGenres, setAvailableGenres] = useState([])
+  const [pickedGenres, setPickedGenres] = useState([])
+  const [message, setMessage] = useState({type: 'normal', message: '', return: false})
 
-  const updated = await updateUserProperty(userProf, 'favoriteGenres', toSave)
+  useEffect(() => {
+    async function getGs(){
+      const genres = await tmdbClient.fetchGenreAll()
+      setAvailableGenres(genres); 
+    }
+    getGs()
+  }, [])
   
-  userProfile.setToStorage(updated)
+  
+
+  function pick(val){
+    if(pickedGenres.length<6&&!pickedGenres.includes(val)){
+        setPickedGenres([...pickedGenres, val])
+        setMessage({type: 'normal', message: '', return: false})
+    }else{
+      if(pickedGenres.length==6&&!pickedGenres.includes(val)){
+        setTimeout(() => {
+          setMessage({type: 'error', message: 'You can only pick 6 genres', return: true})
+        }, 10);
+      }
+      if(pickedGenres.includes(val)){
+        setPickedGenres(pickedGenres.filter(item => item.id !== val.id))
+        setMessage({type: 'normal', message: '', return: false})
+
+      }
+    }
+  }
+  function Item({genre, selected}){
+    return (
+      <span onClick={()=>pick(genre)} className={selected?"genre picked":"genre"}>{genre.name}</span>
+    )
+  }
+  
+  return (
+    <>
+    <div className="genre-listing">bbbbb</div>
+      <Modal defaultCancel={false}>
+        <div className="top">
+
+          
+          {
+            availableGenres.length>0?
+              <h1>Choose genres</h1>
+            :null
+          }
+          {
+            message.return?
+              <b className={`message ${message.type}`}>{message.message}</b> 
+            : null
+          }
+          <span className="skip" onClick={()=>skip()}>Skip <ArrowRightIcon /></span>
+        </div>
+
+        <div className="availableGenres">
+          {
+            availableGenres.length>0?availableGenres.map((genre, index) => (
+              <Item key={index} genre={genre} selected={pickedGenres.includes(genre)?true:false} />
+            )):<Loader path="genres" />
+          }
+        </div>
+
+        {
+          pickedGenres.length>0?
+            <span className="save" onClick={()=>save(pickedGenres)}>Save</span>
+          :null
+        }
+      </Modal>
+    </>
+  )
 }
 
 
 
-function App({def}) {
+
+function App() {
   const isReady = useDelay(1000); // Delay for 1 seconds
 
   const [pageName, setPageName] = useState('');
   const [forYou, setForYou] = useState([])
-  const [user, setUser] = useState(null)
+  const [showGList, setShowGList] = useState(false)
+  const {user, setUser} = useContext(UserContext)
+  
+  
   
   useEffect(() => {
     const getLastPathSegment = (pathname) => {
@@ -90,46 +163,45 @@ function App({def}) {
     setPageName(getLastPathSegment(window.location.pathname));
     setColor()
     
-    async function getUserProfile() {
-      const user = await userProfile.getFromStorage(def).then(res => JSON.parse(res) )
-      setUser(user);
-    }
-    
-    setTimeout(async() => {
-      await getUserProfile()
-    }, 100);
-    
-    
+
+    // if(user){
+    //   saveGenres()
+    // }
   }, []);
-  async function generateImageForAllCollection() {
-    if(user){
-      const collection = user.userCollections;
-      collection.map(async i => {
-        if(i.items.length <= 4 || i.collectionThumbnail == 'https://via.placeholder.com/150'){
-          const src = await generateCollageSrc(i.items)
-          i.collectionThumbnail = src          
+  
+    async function saveGenres(toSave=null){
+      if(user.id){
+        if(toSave){
+          const updated = updateUserProperty(user, 'favoriteGenres', toSave)
+          setUser(updated);
+        }else{
+          const allGeneres = await getGenre()
+          const randomSave = await generateRandomGenre(allGeneres)
+          const updated = updateUserProperty(user, 'favoriteGenres', randomSave)
+          setUser(updated);
         }
-      })
-      
+      }
     }
-  }
+  
+  
 
   useEffect(() => {
-
-    async function getGenreSuggestion(){
-      const userGenres = user.favoriteGenres      
-      let recommend = await tmdbClient.fetchVariousGenreRecommendations(userGenres)
-      setForYou(recommend);
+    async function getForYou(genres){
+      const generateForYou = await tmdbClient.fetchVariousGenreRecommendations(genres)
+      setForYou(generateForYou);
+      
     }
+   if(user.favoriteGenres&&user.favoriteGenres.length>0){
+      getForYou(user.favoriteGenres)
+   }else{
+    setShowGList(true)
+    
+   }
 
-    if(user){
-      saveGenres(user);
-      generateImageForAllCollection()
-      setTimeout(async() => {
-        await getGenreSuggestion()
-      }, 2000);
-    }
+        
   }, [user])
+  
+
   
 
   const path = pageName!==""?pageName=="search"?"Searching":pageName:"Home";
@@ -141,28 +213,28 @@ function App({def}) {
     
     
     {isReady ? 
-    <Suspense fallback={<Loader path={path}/>}>
-    
-        <Routes>
-            {/* main pages */}
-            <Route path='/' element={<Home forYou={forYou}/>} />
-            <Route path='/search' element={<Search/>} />
-            <Route path='/playlists' element={<Playlist/>} />
-            <Route path='/playlists/:playlist_name' element={<SelectedPlaylist/>} />
-            <Route path='/playlists/:playlist_name/video' element={<PlayedVideo/>} />
-            <Route path='/playlists/video' element={<PlayedVideo/>} />
-            <Route path='/video' element={<PlayedVideo/>} />
+      user.favoriteGenres.length>0?
+        <Suspense fallback={<Loader path={path}/>}>
+            <Routes>
+                {/* main pages */}
+                <Route path='/' element={<Home forYou={forYou}/>} />
+                <Route path='/search' element={<Search/>} />
+                <Route path='/playlists' element={<Playlist/>} />
+                <Route path='/playlists/:playlist_name' element={<SelectedPlaylist/>} />
+                <Route path='/playlists/:playlist_name/video' element={<PlayedVideo/>} />
+                <Route path='/playlists/video' element={<PlayedVideo/>} />
+                <Route path='/video' element={<PlayedVideo/>} />
 
 
-            {/* extra pages */}
-            <Route path="/assets/colors" element={<ColorPalette templates={()=>setColor()} />} />
-            <Route path="/assets/components" element={<ComponentsPreview />} />
-            <Route path="/tests/requests" element={<RequestTest />} />
-            <Route path='/tests/requests/played' element={<PlayedVideoTest/>} />
-            <Route path='*' element={<div>{`"${path}"`} page not found</div>} />
-        </Routes>
-      
-    </Suspense>
+                {/* extra pages */}
+                <Route path="/assets/colors" element={<ColorPalette templates={()=>setColor()} />} />
+                <Route path="/assets/components" element={<ComponentsPreview />} />
+                <Route path="/tests/requests" element={<RequestTest />} />
+                <Route path='/tests/requests/played' element={<PlayedVideoTest/>} />
+                <Route path='*' element={<div>{`"${path}"`} page not found</div>} />
+            </Routes>
+        </Suspense>
+      :<GenreListing save={(val)=>saveGenres(val)} skip={()=>saveGenres()} />
        : 
        <Loader path={path}/>
              }

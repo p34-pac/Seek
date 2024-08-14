@@ -1,16 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './Search.css';
 import { ArrowBendUpIcon, CancelIcon, SearchIcon } from '../../asset component/Icons/Icons';
 import Header from '../Header/Header';
 import { useNavigate } from 'react-router-dom';
 import {deleteFromArray, updateArray, updateUserProperty, userProfile } from '../../../functions/Requests/actions';
+import { UserContext } from '../../../UserContext';
 
-function ListContent({ icon, text, action }) {
+function ListContent({ icon, text, action, onClick }) {
   return (
     <li className='ListContent'>
-      <b className="searchedText">{text}</b>
+      <b className="searchedText" onClick={onClick}>{text}</b>
       <span className="insert" onClick={action}>{icon}</span>
     </li>
   );
@@ -20,53 +21,54 @@ function Search({ setParentalFocus, loadParam }) {
   const [focused, setFocused] = useState(false);
   const input = useRef(null);
   const [inputText, setInputText] = useState('');
-  const [searchData, setSearchData] = useState([]);
-  const [profileData, setProfileData] = useState(null);
+  const [searchData, setSearchData] = useState(null);
+  const {user, setUser} = useContext(UserContext)
   const navigate = useNavigate();
 
-  useEffect(() => {
-    async function savePD(){
-      setProfileData(await userProfile.getFromStorage().then(res=>JSON.parse(res)))
-    }
-    savePD()
 
-  }, []);
 
 
   useEffect(() => {
     const setStore = async ()=>{
-      if (profileData) {
-        setSearchData(profileData.searchHistory)
-        console.log(profileData);
-        
+      if (user&&user.searchHistory) {
+        setSearchData(user.searchHistory)    
       }
     }
 
     setStore()
-  }, [profileData]);
-
-
-
-
-
-
-  const handleRedirect = async () => {
-    navigate(`/search?search=${inputText}`);
-    
-  };
-
+  }, [user]);
   useEffect(() => {
-    if (loadParam&&profileData) {
+    if (loadParam&&searchData) {
+      
       const updatedSearch = updateArray(searchData, loadParam);
       
-      const updatedObj = updateUserProperty(profileData, 'searchHistory', updatedSearch)
+      const updatedObj = updateUserProperty(user, 'searchHistory', updatedSearch)
 
       userProfile.setToStorage(updatedObj)
-
     }
     setFocused(false)
-  }, [loadParam, searchData])
-  
+  }, [loadParam])
+
+
+
+
+
+
+  const handleRedirect = async (key=false) => {
+    if(key){
+        if(key&&key.code.toLowerCase() == 'enter' && inputText.trim()!=''){
+          navigate(`/search?search=${inputText}`);
+          
+        }
+        
+    }else{
+      if(inputText.trim()!=''){
+        navigate(`/search?search=${inputText}`);
+      }
+    }
+    
+  };
+ 
 
   const handleFocus = () => setFocused(true);
 
@@ -87,6 +89,7 @@ function Search({ setParentalFocus, loadParam }) {
     setParentalFocus(focused);
   }, [focused]);
 
+  
 
 
 
@@ -101,8 +104,11 @@ function Search({ setParentalFocus, loadParam }) {
               onBlur={handleBlur}
               type="text"
               placeholder="Find movies and series"
+              onKeyUp={(e)=>handleRedirect(e)}
+              value={inputText}
+              
             />
-            <button onClick={handleRedirect} className='searchGo'>
+            <button onClick={()=>handleRedirect(false)} className='searchGo'>
               <SearchIcon />
             </button>
           </li>
@@ -122,8 +128,7 @@ function Search({ setParentalFocus, loadParam }) {
                 <ul>
                   
                   {searchData.length>0?searchData.map((data, index) => (
-                    <ListContent key={index} text={data} action={()=>{
-                     
+                    <ListContent key={index} onClick={() => {setInputText(data); handleRedirect()}} text={data} action={()=>{
                       setSearchData(deleteFromArray(searchData, data))
                     }} icon={<CancelIcon fill='var(--baseWhite1000)' />} />
                   )):null}

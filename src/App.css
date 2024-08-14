@@ -11,22 +11,23 @@ span, b, h1, h2, h3{
 
 
 
-
+#root > *:not(.Loader):not(.Toastify){
+  height: 100%;
+  overflow: scroll;
+  zoom: 70%;
+}
 #root > *:not(.Loader) > main {
   all: unset;
   width: calc(100%);
-  /* min-width: 100%; */
-  
-  height: fit-content;
+  height: 100%;
+  overflow: scroll;
   max-height: 100%;
   background-color: aliceblue;
-  border: 2px solid black;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0;
-  zoom: 70%;
   padding: 0;
   color: var(--baseBlack1000);
   position: relative;
@@ -34,16 +35,141 @@ span, b, h1, h2, h3{
 
 }
 #root > *:not(.Loader) .profileSection{
+  height: calc(100%);
+
+}
+
+#root .ModalInner {
+  width: 80%;
+  min-width: calc(100% - 40px);
+  max-height: 100vh;
+  overflow: auto;
+  justify-content: flex-start;
+  position: relative;
+  zoom: 130%;
+}
+#root .ModalInner .top{
   width: 100%;
-  max-width: 350px;
-  min-width: 350px;
-  height: 100vh;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 20px;
+}
+#root .ModalInner h1{
+  color: var(--primary1000);
+  margin: 0;
+}
+#root .ModalInner .message{
+  color: var(--primary1000);
+}
+#root .ModalInner .message.error{
+  color: red;
+}
+#root .ModalInner .message.error{
+  color: #ff0000ae;
+  text-align: left;
+  animation: errorSLide 300ms linear forwards;
+  animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+#root .ModalInner .message.success{
+  color: #008000a9;
+  width: 100%;
+  text-align: left;
+}
+#root .ModalInner .availableGenres{
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-content: flex-start;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#root .ModalInner .availableGenres .genre{
+  width: fit-content;
+  height: fit-content;
+  padding: 10px;
+  background-color: var(--primary1000);
+  color: var(--primary100);
+  padding: 10px 20px;
+  border-radius: 100px;
+  flex-grow: 1;
+  flex-basis: 200px;
+  max-width: 30vw;
+  cursor: pointer;
+  font-weight: bolder;
+  transition-duration: 200ms;
+
+}
+#root .ModalInner .availableGenres .Loader{
+  position: relative;
+  background-color: var(--none);
+}
+#root .ModalInner .availableGenres .genre:hover{
+  background-color: var(--primary800);
+  transition-duration: 200ms;
+}
+#root .ModalInner .availableGenres .genre:active{
+  transform: scale(0.95);
+  transition-duration: 200ms;
+}
+#root .ModalInner .availableGenres .genre.picked{
+  background-color: var(--primary400);
+  color: var(--primary1000);
+  transition-duration: 200ms;
+  transform: scale(0.9);
+}
+#root .ModalInner .save,
+#root .ModalInner .skip{
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  background-color: var(--primary500);
+  color: var(--primary1000);
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bolder;
+  transition-duration: 200ms;
+  font-size: clamp(10px, 1.2rem, 2rem);
+  padding: 5px 40px;
+  margin-right: 10px;
+  margin-top: 20px;
+  align-self: flex-end;
+}
+#root .ModalInner .save:hover,
+#root .ModalInner .skip:hover{
+  background-color: var(--primary1000);
+  color: var(--primary100);
+}
+#root .ModalInner .save:active,
+#root .ModalInner .skip:active{
+  transform: scale(0.95);
+}
+#root .ModalInner .skip{
+  position: absolute;
+  right: 10px;
+  top: 0;
+  
 }
 
 
-
-
-
+@keyframes errorSLide {
+  0%{
+      transform: translateX(-10px);
+  }
+  25%{
+      transform: translateX(0);
+  }
+  50%{
+      transform: translateX(-10px);
+  }
+  100%{
+      transform: translateX(0);
+  }
+}
 
 @media screen and (max-width: 800px) {
   #root > *:not(.Loader) > main {
