@@ -10,9 +10,9 @@ export async function generateKey() {
   return Array.from(key).map(byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-// Function to store the key in the cache
-export async function storeKeyInCookie(key) {
   const cookies = new Cookies()
+  // Function to store the key in the cache'
+export async function storeKeyInCookie(key) {
 
   if(cookies.get('secret-key')){
     console.log("secret-key exists in cookies");
@@ -28,16 +28,15 @@ export async function storeKeyInCookie(key) {
 
 // Function to retrieve the key from the cache
 function getKeyFromCookie() {
-  const cookie = new Cookies()
-  if(cookie.get('secret-key')){
-    return cookie.get('secret-key')
+  if(cookies.get('secret-key')){
+    return cookies.get('secret-key')
   }else{
-    return
+    return null
   }
 
 }
-export const  SECRET = ()=>{
-  // Retrieve the key and use it
+export  const  SECRET = async ()=>{
+  // Retrieve the key and use it  
   return getKeyFromCookie()
   
 }
@@ -150,18 +149,21 @@ export class StorageManager {
     this.storage = storage;
   }
 
-  async encryptData(data) {
-
-    return CryptoJS.AES.encrypt(JSON.stringify(data), SECRET()).toString();
+  async encryptData(data) {    
+    if(await SECRET()){
+      console.log(await SECRET());
+      
+      return CryptoJS.AES.encrypt(data, await SECRET()).toString();
+    }
   }
 
   async decryptData(ciphertext) {
     try {
-      if(SECRET()){
-        const bytes = CryptoJS.AES.decrypt(ciphertext, SECRET());
+      if(await SECRET()){
+        const bytes = CryptoJS.AES.decrypt(ciphertext, await SECRET());
         
         const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-        return decryptedData ? JSON.parse(decryptedData) : []; // Return an empty array if data is invalid
+        return decryptedData ? decryptedData : []; // Return an empty array if data is invalid
       }
 
     } catch (error) {
@@ -176,7 +178,9 @@ export class StorageManager {
       this.setToStorage(setDef);
       return [];
     }
-    return this.decryptData(encryptedData);
+
+    
+    return await this.decryptData(encryptedData);
   }
 
   async setToStorage(data) {

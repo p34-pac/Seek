@@ -21,18 +21,7 @@ export const defUser = {
   searchHistory: [],
   favoriteGenres: [],
 }
-if(!localStorage.getItem('user')){
-  const defaultUse = {
-    id: 1,
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    userCollections: [],
-    searchHistory: [],
-    favoriteGenres: [],
-  }
-  
-  userProfile.setToStorage(defaultUse).then(res => console.log(res))
-}
+
 
 
 
@@ -41,7 +30,7 @@ if(!localStorage.getItem('user')){
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-        <UserContextProvider def={defUser}>
+        <UserContextProvider>
           <App />
         </UserContextProvider>
     </BrowserRouter>
