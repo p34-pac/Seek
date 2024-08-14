@@ -11,12 +11,14 @@
     height: calc(100vh - 50px);
     overflow-y: scroll;
     padding-bottom: 50px;
+
 }
-.Home .carousel{
+/* Sticky position adjustments */
+/* .Home .carousel {
     position: sticky;
     top: -100px;
     z-index: 0;
-}
+  } */
 .Home .section{
     width: 100%;
     height: fit-content;
