@@ -15,13 +15,9 @@ export async function generateKey() {
 export async function storeKeyInCookie(key) {
 
   if(cookies.get('secret-key')){
-    console.log("secret-key exists in cookies");
     return
   }else{
-    cookies.set('secret-key', key, { path: '/' });
-    console.log("secret-key created");
-
-    
+    cookies.set('secret-key', key, { path: '/' });    
   }
 }
 
@@ -132,7 +128,6 @@ export  const  SECRET = async ()=>{
 
 export const convertTimeToPercentage = (currentTime, totalDuration) => {
     if (totalDuration <= 0) return 0; // Avoid division by zero
-    console.log(currentTime, totalDuration);
 
     // Calculate percentage
     let percentage = (currentTime / totalDuration) * 100;
@@ -151,21 +146,8 @@ export class StorageManager {
 
   async encryptData(data) {    
     
-    try {
-      if(await SECRET()){
-        console.log(await SECRET());
-        
-        return CryptoJS.AES.encrypt(data, await SECRET()).toString();
-      }
-    } catch (error) {
-      try {
-        cookies.remove('secret-key')
-        if(localStorage.getItem(this.storage)){
-          localStorage.removeItem(this.storage)
-        }
-      } catch (error) {
-        return
-      }
+    if(await SECRET()){      
+      return CryptoJS.AES.encrypt(data, await SECRET()).toString();
     }
   }
 
@@ -180,14 +162,15 @@ export class StorageManager {
 
     } catch (error) {
       console.error('Error decrypting data:', error);
-      try {
-        cookies.remove('secret-key')
-        if(localStorage.getItem(this.storage)){
-          localStorage.removeItem(this.storage)
-        }
-      } catch (error) {
-        return
-      }
+       // Clear local storage
+      localStorage.clear();
+
+      // Clear cookies
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+      });
       return []; // Return an empty array if decryption fails
     }
   }

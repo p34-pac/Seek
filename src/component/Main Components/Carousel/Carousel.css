@@ -3,6 +3,7 @@
   height: 400px !important;
   position: relative;
   display: flex;
+  overflow: hidden;
 }
 
 .carousel-inner {

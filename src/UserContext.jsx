@@ -26,7 +26,7 @@ function UserContextProvider({children}) {
         
         userProfile.setToStorage(defaultUse).then(res => setUser(res))
       }else{
-        console.log( await userProfile.getFromStorage().then(res => setUser(JSON.parse(res))));
+        await userProfile.getFromStorage().then(res => setUser(JSON.parse(res)))
         
       }
     }
@@ -36,7 +36,7 @@ function UserContextProvider({children}) {
     }, [])
     useEffect(() => {
         if(user.id > 0){                    
-            userProfile.setToStorage(user).then(res => console.log(res))
+            userProfile.setToStorage(user).then(res => res)
         }
         
       }, [user])

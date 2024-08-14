@@ -11,7 +11,7 @@ import UserContextProvider from './UserContext.jsx'
 
 // Generate and store the key
 generateKey().then(key => {
-  storeKeyInCookie(key).then(() => console.log('Secret key stored in cookie.'));
+  storeKeyInCookie(key)
 });
 export const defUser = {
   id: null,

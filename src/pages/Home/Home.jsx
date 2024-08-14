@@ -25,7 +25,7 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
       setRangeArray(range(page.maxPage, 1))
     }, [page])
     useEffect(() => {
-        console.log(rangeArray);
+        // console.log(rangeArray);
     }, [rangeArray])
     
     return(
