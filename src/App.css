@@ -156,6 +156,41 @@ span, b, h1, h2, h3{
   
 }
 
+#root .Modal.Error .ModalInner{
+  width: fit-content !important;
+  min-width: unset;
+}
+#root .errorPage{
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#root .errorPage *{
+  color: var(--baseBlack1000);
+}
+#root .errorPage button{
+  width: fit-content;
+  height: fit-content;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: var(--none);
+  outline: none;
+  border: none;
+  font-weight: bolder;
+  cursor: pointer;
+  box-shadow: inset 1px 1px 2px var(--primary500),
+              inset -1px -1px 2px var(--primary500);
+}
+#root .errorPage button:hover{
+  background-color: var(--none);
+  box-shadow: inset 1px 1px 4px var(--primary500),
+              inset -1px -1px 4px var(--primary500);
+  transform: scale(0.995);
+  transition-duration: 200ms;
+}
 
 @keyframes errorSLide {
   0%{
