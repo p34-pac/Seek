@@ -13,7 +13,7 @@ import Home from './pages/Home/Home';
 import Header from './component/Main Components/Header/Header';
 import Profile from './component/Main Components/Profile/Profile';
 import { getMoviesWithGenreNames, tmdbClient } from './functions/Requests/fetchApi';
-import { generateArrayOfRandomNumbers, generateCollageSrc, getRandomValues, updateUserProperty, userProfile } from './functions/Requests/actions';
+import { BACKDROP_SIZE, generateArrayOfRandomNumbers, generateCollageSrc, getRandomValues, IMAGE_BASE_URL, updateUserProperty, userProfile } from './functions/Requests/actions';
 import UserContextProvider, { UserContext } from './UserContext';
 import Modal from './component/MinorComponents/Modal/Modal';
 import { ArrowRightIcon } from './component/asset component/Icons/Icons';
@@ -59,79 +59,70 @@ async function generateRandomGenre(genres, amount=6){
   return myGenres
 }
 
-function GenreListing({save, skip}){
-  const [availableGenres, setAvailableGenres] = useState([])
-  const [pickedGenres, setPickedGenres] = useState([])
-  const [message, setMessage] = useState({type: 'normal', message: '', return: false})
+function GenreListing({ save, skip }) {
+  const [availableGenres, setAvailableGenres] = useState([]);
+  const [pickedGenres, setPickedGenres] = useState([]);
+  const [message, setMessage] = useState({ type: 'normal', message: '', return: false });
 
   useEffect(() => {
-    async function getGs(){
-      const genres = await tmdbClient.fetchGenreAll()
-      setAvailableGenres(genres); 
+    async function getGs() {
+      const genres = await tmdbClient.fetchGenreAll();
+      const genresWithSrc = await Promise.all(genres.map(async genre => {
+        const movieSrc = await tmdbClient.fetchSingleMovieByGenre(genre.id);
+        return { ...genre, src: movieSrc };
+      }));
+      setAvailableGenres(genresWithSrc);
     }
-    getGs()
-  }, [])
-  
-  
+    getGs();
+  }, []);
 
-  function pick(val){
-    if(pickedGenres.length<6&&!pickedGenres.includes(val)){
-        setPickedGenres([...pickedGenres, val])
-        setMessage({type: 'normal', message: '', return: false})
-    }else{
-      if(pickedGenres.length==6&&!pickedGenres.includes(val)){
+  function pick(val) {
+    if (pickedGenres.length < 6 && !pickedGenres.includes(val)) {
+      setPickedGenres([...pickedGenres, val]);
+      setMessage({ type: 'normal', message: '', return: false });
+    } else {
+      if (pickedGenres.length === 6 && !pickedGenres.includes(val)) {
         setTimeout(() => {
-          setMessage({type: 'error', message: 'You can only pick 6 genres', return: true})
+          setMessage({ type: 'error', message: 'You can only pick 6 genres', return: true });
         }, 10);
       }
-      if(pickedGenres.includes(val)){
-        setPickedGenres(pickedGenres.filter(item => item.id !== val.id))
-        setMessage({type: 'normal', message: '', return: false})
-
+      if (pickedGenres.includes(val)) {
+        setPickedGenres(pickedGenres.filter(item => item.id !== val.id));
+        setMessage({ type: 'normal', message: '', return: false });
       }
     }
   }
-  function Item({genre, selected}){
+
+  function Item({ genre, selected }) {
     return (
-      <span onClick={()=>pick(genre)} className={selected?"genre picked":"genre"}>{genre.name}</span>
-    )
+      <span data-before={pickedGenres.find(i => i.name == genre.name)?pickedGenres.findIndex(i => i.name == genre.name)+1:null} onClick={() => pick(genre)} className={selected ? "genre picked" : "genre"}>
+        <b>{genre.name}</b>
+        {genre.src && <img src={ IMAGE_BASE_URL+BACKDROP_SIZE[BACKDROP_SIZE.length-1]+genre.src} alt={genre.name} />}
+      </span>
+    );
   }
-  
+
   return (
     <>
       <Modal className='genreModal' defaultCancel={false}>
         <div className="top">
-
-          
-          {
-            availableGenres.length>0?
-              <h1>Choose genres</h1>
-            :null
-          }
-          {
-            message.return?
-              <b className={`message ${message.type}`}>{message.message}</b> 
-            : null
-          }
-          <span className="skip" onClick={()=>skip()}>Skip <ArrowRightIcon /></span>
+          {availableGenres.length > 0 ? <h1>Choose genres</h1> : null}
+          {message.return ? <b className={`message ${message.type}`}>{message.message}</b> : null}
+          <span className="skip"> <button onClick={() => skip()}>Skip <ArrowRightIcon fill="var(--primary100)" /></button> </span>
         </div>
 
         <div className="availableGenres">
-          {
-            availableGenres.length>0?availableGenres.map((genre, index) => (
-              <Item key={index} genre={genre} selected={pickedGenres.includes(genre)?true:false} />
-            )):<Loader path="genres" />
-          }
+          {availableGenres.length > 0
+            ? availableGenres.map((genre, index) => (
+              <Item key={index} genre={genre} selected={pickedGenres.includes(genre)} />
+            ))
+            : <Loader path="genres" />}
         </div>
 
-        {
-          pickedGenres.length>0?
-            <span className="save" onClick={()=>save(pickedGenres)}>Save</span>
-          :null
-        }
+        {pickedGenres.length > 0 ? <span className="save" ><button onClick={() => save(pickedGenres)}>Save</button></span> : null}
       </Modal>
     </>
-  )
+  );
 }
 
 

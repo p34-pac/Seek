@@ -339,7 +339,12 @@ class TMDBClient {
             throw error; // Re-throw the error to handle it in the component
         }
     }
-
+    async fetchSingleMovieByGenre(genreId) {
+        const url = `${this.baseUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&sort_by=popularity.desc&language=en-US`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.results.length ? data.results[0].poster_path : null;
+      }
 
     // Fetch trending movies
     async getTrendingMovies() {

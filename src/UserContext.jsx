@@ -68,18 +68,18 @@ function UserContextProvider({children}) {
         }
         
       }, [message])
-      // useEffect(() => {
-      //   setTimeout(() => {
-      //     if(!loading&&user){
-      //       setMessage({type: 'success', message: `welcome ${user.name}`, return: true})
-      //       return
-      //     }else if(loading){           
-      //       setLoading(false)
-      //       setMessage({type: 'error', message: 'taking too much time to load', return: true})
-      //     }
+      useEffect(() => {
+        setTimeout(() => {
+          if(!loading&&user){
+            setMessage({type: 'success', message: `welcome ${user.name}`, return: true})
+            return
+          }else if(loading){           
+            setLoading(false)
+            setMessage({type: 'error', message: 'taking too much time to load', return: true})
+          }
   
-      //   }, 10000);
-      // }, [loading])
+        }, 10000);
+      }, [loading])
 
       
   return (
