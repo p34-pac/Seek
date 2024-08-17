@@ -1,19 +1,21 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Home.css'
 import Carousel from '../../component/Main Components/Carousel/Carousel'
 import { images } from '../../component/asset component/Components preview/ComponentsPreview'
 import MovieCard from '../../component/Main Components/MovieCard/MovieCard'
 import Header from '../../component/Main Components/Header/Header'
 import Profile from '../../component/Main Components/Profile/Profile'
-import { BACKDROP_SIZE, generateArrayOfRandomNumbers, IMAGE_BASE_URL, range } from '../../functions/Requests/actions'
+import { BACKDROP_SIZE, generateArrayOfRandomNumbers, IMAGE_BASE_URL, range, updateUserProperty } from '../../functions/Requests/actions'
 import { GenraMap3 } from '../../component/MinorComponents/GenreMap/GenreMap'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../../component/MinorComponents/Modal/Modal'
 import AddToCollection from '../../component/MinorComponents/AddToCollection/AddToCollection'
 import ActionWithIcon from '../../component/MinorComponents/ActionWithIcon/ActionWithIcon'
 import { AngleRightIcon } from '../../component/asset component/Icons/Icons'
+import { UserContext } from '../../UserContext'
+import { tmdbClient } from '../../functions/Requests/fetchApi'
 
 function ItemCardAction({fill='var(--primary100)', item,actions=[
     {
@@ -41,17 +43,29 @@ return (
 function image(path){
     return IMAGE_BASE_URL+BACKDROP_SIZE[0]+path
 }
-function ForYou({isLessThan500, forYouArray, page, setPage}){
+function ForYou({isLessThan500, forYouArray}){
+    const [page, setPage] = useState(1)
+    const [minPage, setMinPage] = useState(1)
+    const [maxPage, setMaxPage] = useState(1)
     const [rangeArray, setRangeArray] = useState([])
     const navigate = useNavigate()
     const [addCollection, setAddCollection] = useState(null)
+
+    useEffect(() => {
+        // setMaxPage((forYou.length-1)/10)
+        if(forYouArray){
+            if(Math.round(((forYouArray.length-1)/10))%2 == 0){
+                setMaxPage(Math.round(((forYouArray.length-1)/10)))
+            }else{
+                setMaxPage(Math.round(((forYouArray.length-1)/10))+1)
+            }
+        }
+        
+      }, [forYouArray])
     
     useEffect(() => {
-      setRangeArray(range(page.maxPage, 1))
-    }, [page])
-    useEffect(() => {
-        // console.log(rangeArray);
-    }, [rangeArray])
+      setRangeArray(range(maxPage, minPage))
+    }, [maxPage])
     const forYouOptions = [
         {
             name:'save to collection',
@@ -70,8 +84,8 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
                 forYouArray&&forYouArray.map((forYou, index) => {
                     return (
                         
-                            index <= ((forYouArray.length - 1) / page.maxPage) * page.page &&
-                            index >= ((forYouArray.length - 1) / page.maxPage) * (page.page - 1) ? (
+                            index <= ((forYouArray.length - 1) / maxPage) * page &&
+                            index >= ((forYouArray.length - 1) / maxPage) * (page - 1) ? (
                             <MovieCard
                                 text1={forYou.title}
                                 text2={<GenraMap3 genreList={forYou.genre_names} />}
@@ -102,7 +116,7 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
             <ul className="pagination">
                 {
                     rangeArray.map(i => {
-                        return <li key={i} onClick={()=>setPage(i)} className={page.page === i ? 'page active' : 'page'}>{i}</li>
+                        return <li key={i} onClick={()=>setPage(i)} className={page === i ? 'page active' : 'page'}>{i}</li>
                     })
                 }
             </ul>
@@ -117,16 +131,6 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
         </>
     )
 }
-function Trending({isLessThan500}){
-    
-
-    return(
-        <section className="trending">
-            <MovieCard verticalAlign={isLessThan500}/>
-            <MovieCard verticalAlign={isLessThan500}/>
-        </section>
-    )
-}
 
 
 
@@ -137,7 +141,8 @@ function Home({forYou}) {
     const [page, setPage] = useState(1)
     const [minPage, setMinPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
-
+    const {user, setUser} = useContext(UserContext)
+    const [trending, setTrending] = useState(null)
     
     const [isLessThan500, setIsLessThan500] = useState(false)
     const [showProfile, setShowProfile] = useState(false)
@@ -149,16 +154,18 @@ function Home({forYou}) {
         setIsLessThan500(isWidthLessThan500())
       }, [])
       useEffect(() => {
-        // setMaxPage((forYou.length-1)/10)
-        if(forYou){
-            if(Math.round(((forYou.length-1)/10))%2 == 0){
-                setMaxPage(Math.round(((forYou.length-1)/10)))
-            }else{
-                setMaxPage(Math.round(((forYou.length-1)/10))+1)
-            }
-        }
-        
-      }, [forYou])
+        if (!user.trending) {
+            tmdbClient.recommendMovies(user.favoriteGenres, user.userCollections, user.searchHistory).then(res => {
+              // const includeTrending
+              const updated = updateUserProperty(user, 'trending', res)
+              setUser(updated);
+              
+            })
+          }else{
+            setTrending(user.trending)
+          }
+      }, [user])
+      
 
 
   return (
@@ -175,9 +182,9 @@ function Home({forYou}) {
                     </ul>
                     {
                         tab==1?
-                            <ForYou setPage={(val)=>setPage(val)} page={{page, maxPage, minPage}} isLessThan500={isLessThan500} forYouArray={forYou}/>
+                            <ForYou setPage={(val)=>setPage(val)} isLessThan500={isLessThan500} forYouArray={forYou}/>
                         :tab==2?
-                            <Trending isLessThan500={isLessThan500}/>
+                            <ForYou setPage={(val)=>setPage(val)} isLessThan500={isLessThan500} forYouArray={trending}/>
                         :null
                     }
                 </div>  
