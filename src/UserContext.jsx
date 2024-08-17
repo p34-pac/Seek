@@ -73,10 +73,14 @@ function UserContextProvider({children}) {
           if(!loading&&user){
             setMessage({type: 'success', message: `welcome ${user.name}`, return: true})
             return
-          }else if(loading){           
+          }else if(loading && user){           
             setLoading(false)
+          }else{
             setMessage({type: 'error', message: 'taking too much time to load', return: true})
+
           }
+          setLoading(false)
+
   
         }, 10000);
       }, [loading])

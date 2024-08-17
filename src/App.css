@@ -53,7 +53,7 @@ span, b, h1, h2, h3{
   padding-bottom: 0;
   padding-top: 0;
 }
-#root .Modal .ModalInner .top{
+#root > .Modal .ModalInner .top{
   width: calc(100% + 40px);
   height: fit-content;
   display: flex;
@@ -70,29 +70,29 @@ span, b, h1, h2, h3{
   background: linear-gradient(180deg, rgba(0,0,0,1) 0%, #999999bd 50%, #fffffff4 100%);
 
 }
-#root .Modal .ModalInner h1{
+#root > .Modal .ModalInner h1{
   color: var(--baseBlack100);
   margin: 0;
 }
-#root .Modal .ModalInner .message{
+#root > .Modal .ModalInner .message{
   color: var(--primary1000);
   
 }
-#root .Modal .ModalInner .message.error{
+#root > .Modal .ModalInner .message.error{
   color: red;
 }
-#root .Modal .ModalInner .message.error{
+#root > .Modal .ModalInner .message.error{
   color: #ff0000ae;
   text-align: left;
   animation: errorSLide 300ms linear forwards;
   animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-#root .Modal .ModalInner .message.success{
+#root > .Modal .ModalInner .message.success{
   color: #008000a9;
   width: 100%;
   text-align: left;
 }
-#root .Modal .ModalInner .availableGenres{
+#root > .Modal .ModalInner .availableGenres{
   width: 100%;
   height: fit-content;
   display: flex;
@@ -101,7 +101,7 @@ span, b, h1, h2, h3{
   flex-wrap: wrap;
   gap: 10px;
 }
-#root .ModalInner .availableGenres .genre{
+#root > .Modal .ModalInner .availableGenres .genre{
   width: 100px;
   max-width: 40vw;
   max-height: 40vw;
@@ -120,7 +120,7 @@ span, b, h1, h2, h3{
   overflow: hidden;
   
 }
-#root .ModalInner .availableGenres .genre img{
+#root > .Modal .ModalInner .availableGenres .genre img{
   width: 100%;
   height: 100%;
   position: absolute;
@@ -130,7 +130,7 @@ span, b, h1, h2, h3{
   object-position: center;
   object-fit: cover;
 }
-#root .ModalInner .availableGenres .genre b{
+#root > .Modal .ModalInner .availableGenres .genre b{
   width: 100%;
   height: 100%;
   position: absolute;
@@ -143,11 +143,11 @@ span, b, h1, h2, h3{
   background-color: #00020072;
 }
 
-#root .Modal .ModalInner .availableGenres .Loader{
+#root > .Modal .ModalInner .availableGenres .Loader{
   position: relative;
   background-color: var(--none);
 }
-#root .Modal .ModalInner .availableGenres .genre.picked::before{
+#root > .Modal .ModalInner .availableGenres .genre.picked::before{
   /* content: ''; */
   width: 20px;
   height: 20px;
@@ -162,27 +162,27 @@ span, b, h1, h2, h3{
   align-items: center;
   justify-content: center;
 }
-#root .Modal .ModalInner .availableGenres .genre:hover b{
+#root > .Modal .ModalInner .availableGenres .genre:hover b{
   background-color: #00020098;
   -webkit-transition-duration: 200ms;
 }
-#root .Modal .ModalInner .availableGenres .genre:hover img{
+#root > .Modal .ModalInner .availableGenres .genre:hover img{
   -webkit-transform: scale(1.1);
   -webkit-transition-duration: 1s;
 }
-#root .Modal .ModalInner .availableGenres .genre:active{
+#root > .Modal .ModalInner .availableGenres .genre:active{
   transform: scale(0.95);
   transition-duration: 200ms;
 }
-#root .Modal .ModalInner .availableGenres .genre.picked{
+#root> .Modal .ModalInner .availableGenres .genre.picked{
   transform: scale(0.9);
 }
-#root .Modal .ModalInner .availableGenres .genre.picked b{
+#root > .Modal .ModalInner .availableGenres .genre.picked b{
   background-color: #000200bb;
   transition-duration: 200ms;
 }
-#root .Modal .ModalInner .save,
-#root .Modal .ModalInner .skip{
+#root > .Modal .ModalInner .save,
+#root > .Modal .ModalInner .skip{
   width: calc(100% + 40px);
   height: fit-content;
   color: var(--primary1000);
@@ -199,8 +199,8 @@ span, b, h1, h2, h3{
   align-items: center;
   justify-content: flex-end;
 }
-#root .Modal .ModalInner .save button,
-#root .Modal .ModalInner .skip button{
+#root > .Modal .ModalInner .save button,
+#root > .Modal .ModalInner .skip button{
   width: fit-content;
   height: fit-content;
   padding: 10px 40px;
@@ -213,16 +213,16 @@ span, b, h1, h2, h3{
   outline: none;
   border: none;
 }
-#root .Modal .ModalInner .save button:hover,
-#root .Modal .ModalInner .skip button:hover{
+#root > .Modal .ModalInner .save button:hover,
+#root > .Modal .ModalInner .skip button:hover{
   background-color: var(--primary1000);
   color: var(--primary100);
 }
-#root .Modal .ModalInner .save button:active,
-#root .Modal .ModalInner .skip button:active{
+#root> .Modal .ModalInner .save button:active,
+#root> .Modal .ModalInner .skip button:active{
   transform: scale(0.95);
 }
-#root .Modal .ModalInner .skip{
+#root> .Modal .ModalInner .skip{
   width: calc(100%);
   padding-right: 0;
   position: absolute;
@@ -231,7 +231,7 @@ span, b, h1, h2, h3{
   zoom: 80%;  
 
 }
-#root .Modal .ModalInner .save{
+#root> .Modal .ModalInner .save{
   margin-right: -20px;
   margin-bottom: -20px;
   position: sticky;

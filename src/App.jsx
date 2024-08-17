@@ -94,6 +94,7 @@ function GenreListing({ save, skip }) {
   }
 
   function Item({ genre, selected }) {
+    
     return (
       <span data-before={pickedGenres.find(i => i.name == genre.name)?pickedGenres.findIndex(i => i.name == genre.name)+1:null} onClick={() => pick(genre)} className={selected ? "genre picked" : "genre"}>
         <b>{genre.name}</b>
