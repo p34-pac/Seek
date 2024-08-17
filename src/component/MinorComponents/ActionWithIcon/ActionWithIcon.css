@@ -6,8 +6,11 @@
     justify-content: space-between;
 }
 .ActionWithIcon b{
+    width: 200px;
+    min-width: fit-content;
     font-weight: normal;
     font-size: clamp(8px, 1.5rem, 1.8rem);
+    text-align: left;
 }
 .ActionWithIcon i{
     width: 1.5rem;

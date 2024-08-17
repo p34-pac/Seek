@@ -24,7 +24,7 @@ export function CastCrewsCard({img, person="Person", position="Position"}){
     )
 }
 
-function MovieCardCustom({onClick, tabled3=true, tabled4=false}){
+function MovieCardCustom({onClick, tabled3=true, tabled4=false,imgSrc, texts={text1:'', text2:'', text3:'', text4:''}}){
     const [isLessThan500, setIsLessThan500] = useState(false)
     const [hoverMovieCard, setHoverMovieCard] = useState(false)
     function isWidthLessThan500() {
@@ -48,6 +48,12 @@ function MovieCardCustom({onClick, tabled3=true, tabled4=false}){
                     before={false} 
                     shrink
                     onClick={onClick}
+                    imgSrc={imgSrc}
+                    text1={texts.text1}
+                    text2={texts.text2}
+                    text3={texts.text3}
+                    text4={texts.text4}
+                    
                 /> 
             </>
             :
@@ -60,6 +66,11 @@ function MovieCardCustom({onClick, tabled3=true, tabled4=false}){
                     tabled4={tabled4}
                     before={false}
                     onClick={onClick}
+                    imgSrc={imgSrc}
+                    text1={texts.text1}
+                    text2={texts.text2}
+                    text3={texts.text3}
+                    text4={texts.text4}
                 />
             </>
         }

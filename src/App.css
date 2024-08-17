@@ -11,17 +11,20 @@ span, b, h1, h2, h3{
 }
 
 
-
+#root > .Toastify{
+  zoom: 100%;
+}
 #root > *:not(.Loader):not(.Toastify){
   height: 100%;
   overflow: scroll;
-  zoom: 70%;
+  zoom: 90%;
 }
 #root > *:not(.Loader) > main {
   all: unset;
   width: calc(100%);
   height: 100%;
   overflow-x: hidden;
+  overflow-y: scroll;
   max-height: 100%;
   background-color: aliceblue;
   display: flex;
@@ -33,14 +36,13 @@ span, b, h1, h2, h3{
   color: var(--baseBlack1000);
   position: relative;
   flex-grow: 1;
-
 }
 #root > *:not(.Loader) .profileSection{
   height: calc(100%);
 
 }
 
-#root .ModalInner {
+#root .Modal .ModalInner {
   width: 80%;
   min-width: calc(100% - 40px);
   max-height: 100vh;
@@ -49,7 +51,7 @@ span, b, h1, h2, h3{
   position: relative;
   zoom: 130%;
 }
-#root .ModalInner .top{
+#root .Modal .ModalInner .top{
   width: 100%;
   height: fit-content;
   display: flex;
@@ -59,28 +61,28 @@ span, b, h1, h2, h3{
   margin: 20px 0;
   gap: 20px;
 }
-#root .ModalInner h1{
+#root .Modal .ModalInner h1{
   color: var(--primary1000);
   margin: 0;
 }
-#root .ModalInner .message{
+#root .Modal .ModalInner .message{
   color: var(--primary1000);
 }
-#root .ModalInner .message.error{
+#root .Modal .ModalInner .message.error{
   color: red;
 }
-#root .ModalInner .message.error{
+#root .Modal .ModalInner .message.error{
   color: #ff0000ae;
   text-align: left;
   animation: errorSLide 300ms linear forwards;
   animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-#root .ModalInner .message.success{
+#root .Modal .ModalInner .message.success{
   color: #008000a9;
   width: 100%;
   text-align: left;
 }
-#root .ModalInner .availableGenres{
+#root .Modal .ModalInner .availableGenres{
   width: 100%;
   height: fit-content;
   display: flex;
@@ -105,26 +107,26 @@ span, b, h1, h2, h3{
   transition-duration: 200ms;
 
 }
-#root .ModalInner .availableGenres .Loader{
+#root .Modal .ModalInner .availableGenres .Loader{
   position: relative;
   background-color: var(--none);
 }
-#root .ModalInner .availableGenres .genre:hover{
+#root .Modal .ModalInner .availableGenres .genre:hover{
   background-color: var(--primary800);
   transition-duration: 200ms;
 }
-#root .ModalInner .availableGenres .genre:active{
+#root .Modal .ModalInner .availableGenres .genre:active{
   transform: scale(0.95);
   transition-duration: 200ms;
 }
-#root .ModalInner .availableGenres .genre.picked{
+#root .Modal .ModalInner .availableGenres .genre.picked{
   background-color: var(--primary400);
   color: var(--primary1000);
   transition-duration: 200ms;
   transform: scale(0.9);
 }
-#root .ModalInner .save,
-#root .ModalInner .skip{
+#root .Modal .ModalInner .save,
+#root .Modal .ModalInner .skip{
   width: fit-content;
   height: fit-content;
   padding: 0;
@@ -140,16 +142,16 @@ span, b, h1, h2, h3{
   margin-top: 20px;
   align-self: flex-end;
 }
-#root .ModalInner .save:hover,
-#root .ModalInner .skip:hover{
+#root .Modal .ModalInner .save:hover,
+#root .Modal .ModalInner .skip:hover{
   background-color: var(--primary1000);
   color: var(--primary100);
 }
-#root .ModalInner .save:active,
-#root .ModalInner .skip:active{
+#root .Modal .ModalInner .save:active,
+#root .Modal .ModalInner .skip:active{
   transform: scale(0.95);
 }
-#root .ModalInner .skip{
+#root .Modal .ModalInner .skip{
   position: absolute;
   right: 10px;
   top: 0;
@@ -168,7 +170,7 @@ span, b, h1, h2, h3{
   align-items: center;
   justify-content: center;
 }
-#root .errorPage *{
+#root .Modal .errorPage *{
   color: var(--baseBlack1000);
 }
 #root .errorPage button{

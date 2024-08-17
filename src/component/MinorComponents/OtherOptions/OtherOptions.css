@@ -24,7 +24,7 @@
 
 }
 .otherOptions .options{
-    width: 200px;
+    width: fit-content;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -55,12 +55,14 @@
     bottom: unset;
 }
 .otherOptions .options >*{
-    width: calc(100% - 10px);
+    width: fit-content;
+    min-width: calc(100% - 10px);
     height: fit-content;
     padding: 5px 5px;
     text-align: left;
     cursor: pointer;
     font-size: clamp(10px, 1.2rem, 1.8rem);
+    text-wrap: none;
 }
 .otherOptions .options > svg{
     width: 24px;

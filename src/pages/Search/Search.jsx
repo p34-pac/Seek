@@ -13,7 +13,7 @@ import { GenraMap3 } from '../../component/MinorComponents/GenreMap/GenreMap';
 import { LoadingComponent } from '../../component/asset component/Loader/Loader';
 import { CrewCastIcon, DownloadDuotoneIcon } from '../../component/asset component/Icons/Icons';
 
-const useQuery = () => {
+export const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
@@ -112,9 +112,7 @@ function Search() {
   useEffect(() => {
     handleSearch()
   }, [searchParam])
-  useEffect(() => {
-    console.log(result)
-  }, [result])
+
   
 
   

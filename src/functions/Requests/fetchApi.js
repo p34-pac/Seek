@@ -51,7 +51,7 @@ class TMDBClient {
     createGenreMapping(genres) {
         const genreMapping = {};
         genres.forEach(genre => {
-        genreMapping[genre.id] = genre.name;
+            genreMapping[genre.id] = genre.name;
         });
         return genreMapping;
     }
@@ -338,6 +338,77 @@ class TMDBClient {
             console.error('Error fetching movie videos:', error);
             throw error; // Re-throw the error to handle it in the component
         }
+    }
+
+
+    // Fetch trending movies
+    async getTrendingMovies() {
+        const url = `${this.baseUrl}/trending/movie/week?api_key=${this.apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.results || [];
+    }
+
+    // Fetch movie details by movie ID
+    async getMovieDetails(movieId) {
+        const url = `${this.baseUrl}/movie/${movieId}?api_key=${this.apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return data || {};
+    }
+
+    // Recommend movies based on user data
+    async recommendMovies(userGenres = [], userCollections = [], userSearchHistory = []) {
+        const trendingMovies = await this.getTrendingMovies();
+        const genres = await this.fetchGenres();
+        const genreMap = genres.reduce((map, genre) => {
+        map[genre.id] = genre.name;
+        return map;
+        }, {});
+
+        // If no user data, return a random selection of trending movies
+        if (!userGenres.length && !userCollections.length && !userSearchHistory.length) {
+        return this.getRandomMovies(trendingMovies, 10, genreMap);
+        }
+
+        // Filter trending movies based on user data
+        const recommendations = [];
+        for (const movie of trendingMovies) {
+        const movieDetails = await this.getMovieDetails(movie.id);
+        const movieGenres = movieDetails.genres.map(genre => genre.id);
+
+        // // Check if movie matches user genres
+        // if (userGenres.some(genre => movieGenres.includes(genre))) {
+        //     recommendations.push(this.addGenreNames(movie, genreMap));
+        // }
+        // // Check if movie is in user collections
+        // else if (userCollections.includes(movie.id)) {
+        //     recommendations.push(this.addGenreNames(movie, genreMap));
+        // }
+        // // Check if movie matches user search history
+        // else if (userSearchHistory.some(term => movie.title.toLowerCase().includes(term.toLowerCase()))) {
+        //     recommendations.push(this.addGenreNames(movie, genreMap));
+        // }
+        recommendations.push(this.addGenreNames(movie, genreMap));
+        }
+
+        return recommendations.length ? recommendations : this.getRandomMovies(trendingMovies, 10, genreMap);
+    }
+
+    // Helper function to add genre names to movie object
+    addGenreNames(movie, genreMap) {
+        return {
+        ...movie,
+        genre_names: movie.genre_ids.map(id => genreMap[id])
+        };
+    }
+
+    // Helper function to get random movies
+    getRandomMovies(movies, count, genreMap) {
+        return movies
+        .sort(() => 0.5 - Math.random())
+        .slice(0, count)
+        .map(movie => this.addGenreNames(movie, genreMap));
     }
 }
 

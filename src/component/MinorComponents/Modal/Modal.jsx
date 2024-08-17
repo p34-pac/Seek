@@ -5,17 +5,17 @@ import './Modal.css'
 import { CancelIcon } from '../../asset component/Icons/Icons'
 
 
-function Modal({className='', children, shown=true, defaultCancel=true, remove=null}) {
+function Modal({before=null, className='', children, shown=true, defaultCancel=true, remove=null}) {
     const [defShow, setDefShow] = useState(shown)
   return (
     <>
         {
             defShow?
-                <div className={`Modal ${className}`}>
+                <div  className={`Modal ${className}`}>
                    
-                    <div className="ModalInner">
+                    <div data-before={before} className="ModalInner">
                         {defaultCancel?
-                            <span className="removerDef"><CancelIcon onClick={()=>{remove?remove:setDefShow(false)}} /></span>
+                            <span className="removerDef"><CancelIcon onClick={()=>{remove?remove():setDefShow(false)}} /></span>
                         :null}
                         {children}
                     </div>

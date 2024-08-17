@@ -6,30 +6,24 @@ import UserDp from '../../MinorComponents/UserDp/UserDp'
 import Collection from '../../MinorComponents/Collection/Collection'
 import MovieCard from '../MovieCard/MovieCard'
 import ActionWithIcon from '../../MinorComponents/ActionWithIcon/ActionWithIcon'
-import { AngleLeftIcon, AngleRightIcon } from '../../asset component/Icons/Icons'
-import {userProfile } from '../../../functions/Requests/actions'
+import { AddIcon, AngleLeftIcon, AngleRightIcon } from '../../asset component/Icons/Icons'
+import {updateUserProperty, userProfile } from '../../../functions/Requests/actions'
 import { UserContext } from '../../../UserContext'
+import AddToCollection, { NewCollection } from '../../MinorComponents/AddToCollection/AddToCollection'
+import Modal from '../../MinorComponents/Modal/Modal'
+import { useNavigate } from 'react-router-dom'
 
 
-const defActions = [
-    {
-        name:'delete',
-        action: ()=>{return},
-    },
-    {
-        name:'save',
-        action: ()=>{return},
-    }
-]
 
 
-function CollectionCardAction({fill='var(--primary100)', actions=defActions}) {
+
+function CollectionCardAction({fill='var(--primary100)', item, actions=[{name:'delete',action: (item)=>{return},},{name:'save',action: (item)=>{return},}]}) {
   return (
     <>
         {
             actions.map(i=>{
                 return(
-                    <ActionWithIcon onClick={()=>i.action()} key={i.name} icon={<AngleRightIcon fill={fill}/>}>{i.name}</ActionWithIcon>
+                    <ActionWithIcon className='newAddblast' onClick={()=>i.action(item)} key={i.name} icon={<AngleRightIcon fill={fill}/>}>{i.name}</ActionWithIcon>
                 )
             })
         }
@@ -41,6 +35,9 @@ function CollectionCardAction({fill='var(--primary100)', actions=defActions}) {
 function Profile({closeProfile}) {
     const [collections, setCollections] = useState(null)
     const {user, setUser} = useContext(UserContext)
+    const [showCollections, setShowCollections] = useState(false)
+    const [showAllCollections, setShowAllCollections] = useState(false)
+    const navigate = useNavigate()
     useEffect(() => {
         if(user.id){
             setCollections(user.userCollections);
@@ -70,23 +67,49 @@ function Profile({closeProfile}) {
         )
     }
 
+    function AddNewCollectionButton(){
+        return(
+            <span className="add" onClick={()=>setShowCollections(true)}>
+                <b>New</b>
+                <AddIcon fill='var(--baseBlack1000)'/>
+            </span>
+        )
+    }
+    function deleteFromCollection(item){
+        let withoutItem = collections.filter(i => i.name !== item.name)
+        const updateUserCollection = updateUserProperty(user, 'userCollections', withoutItem)
+
+        setUser(updateUserCollection)
+    }
+    const collectionOptions = [
+        {
+            name:'Open',
+            action: (item)=>{navigate(`/collection?collectionName=${item.name}`)},
+        },
+        {
+            name:'Delete',
+            action: (item)=>{deleteFromCollection(item)},
+        }
+        
+    ]
     
   return (
     <>
         <section className='profileSection'>
         <span className="back"><i onClick={()=>closeProfile()}><AngleLeftIcon fill='var(--baseWhite1000)'/></i></span>
-        <UserDp userInfo={user}/>
+        <UserDp/>
         <div className="collectionsCategoryOverview">
-            <Collection seeAllLink="/playlists" className="Downloads" CollectionName='Downloads'>
+            {/* <Collection seeAllLink="/playlists" className="Downloads" CollectionName='Downloads'>
                 <MovieCard play={false} optionDrop={false} shrink={true} />
                 <MovieCard play={false} optionDrop={false} shrink={true} />
                 <MovieCard play={false} optionDrop={false} shrink={true} />
-            </Collection>
-            <Collection className="MyCollections" CollectionName='My Collections'>
+            </Collection> */}
+            <Collection seeAll={collections&&collections.length>0?false:<AddNewCollectionButton />} seeAllAction={()=>setShowAllCollections(true)} className="MyCollections" CollectionName='My Collections'>
                 
                 {
                     collections && collections.map((collection, index) => {
                         return <MovieCard 
+                                    onClick={()=>navigate(`/collection?collectionName=${collection.name}`)}
                                     text1={<b>{collection.name}</b>}
                                     text2={<b>{collection.items.length} item{collection.items.length>1?'s':''}</b>}
                                     text3={<GetTime full={collection.date} />}
@@ -96,7 +119,8 @@ function Profile({closeProfile}) {
                                     optionDrop
                                     optionDropOnRight
                                     shrink={true}
-                                ><CollectionCardAction fill='var(--primary100)' /></MovieCard>
+                                    optionDropItems={<CollectionCardAction item={collection} actions={collectionOptions} fill='var(--primary100)'/>}
+                                />
                     })
                 }
                 
@@ -117,6 +141,21 @@ function Profile({closeProfile}) {
             </Collection>
         </div>
     </section>
+    {
+        showCollections?
+            <Modal defaultCancel={false}>
+                <NewCollection cancel={()=>setShowCollections(false)} create={()=>setShowCollections(false)} />
+            </Modal>
+        :null
+    }
+    {
+        showAllCollections?
+            <Modal defaultCancel={false}>
+                <AddToCollection cancel={()=>setShowAllCollections(false)} add={false} />
+            </Modal>
+        :null
+    }
+    
     </>
   )
 }

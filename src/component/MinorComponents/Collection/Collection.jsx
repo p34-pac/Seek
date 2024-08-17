@@ -6,7 +6,22 @@ import { ArrowRightIcon } from '../../asset component/Icons/Icons'
 import MovieCard from '../../Main Components/MovieCard/MovieCard'
 import { useNavigate } from 'react-router-dom'
 
-function Collection({seeAllLink, className, showSeeAll=true, children = <MovieCard play={false} optionDrop={false} shrink={true} />, CollectionName="Collection name"}) {
+function SeeAll({seeAllLink, navigate, onClick=()=>{return}}){
+    function handleClick(){
+        if(seeAllLink){
+            navigate(seeAllLink)
+        }
+        onClick()
+    }
+    return(
+        <span className="seeAll" onClick={handleClick}>see all
+            <i><ArrowRightIcon fill='var(--baseBlack1000)'/></i>
+        </span>
+    )
+}
+
+
+function Collection({seeAll=false,seeAllLink, className, seeAllAction=()=>{return}, showSeeAll=true, children = <MovieCard play={false} optionDrop={false} shrink={true} />, CollectionName="Collection name"}) {
     const navigate = useNavigate()
   return (
     <div className={className?`collection ${className}`:"collection"}>
@@ -15,9 +30,7 @@ function Collection({seeAllLink, className, showSeeAll=true, children = <MovieCa
             
             {
                 showSeeAll?
-                    <span className="seeAll" onClick={()=>seeAllLink?navigate(seeAllLink):null}>see all
-                        <i><ArrowRightIcon fill='var(--baseBlack600)'/></i>
-                    </span>
+                    !seeAll?<SeeAll onClick={seeAllAction} navigate={navigate} seeAllLink={seeAllLink}/>:seeAll
                 :null
             }
         </div>

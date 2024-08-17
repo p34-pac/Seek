@@ -23,8 +23,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    color: var(--baseBlack600);
+    color: var(--baseBlack1000);
     font-size: clamp(10px, 1rem, 1.5rem) ;
+    cursor: pointer;
 }
 
 .collection .top .seeAll i{

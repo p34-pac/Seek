@@ -1,16 +1,12 @@
 .VideoDescription {
     width: 100%;
-    height: fit-content;
-    max-height: calc(100vh);
+    height: fit-content; /* Allow it to take content height */
     overflow: auto;
-    position: sticky;
-    padding-top: 0 !important;
-    z-index: 1;
-
-}
-
-.VideoDescription .descriptionTop {
-    width: calc( 100% - 20px);
+    z-index: 0;
+  }
+  
+  .VideoDescription .descriptionTop {
+    width: calc(100% - 20px);
     padding: 10px;
     height: fit-content;
     display: flex;
@@ -21,7 +17,8 @@
     z-index: 1;
     position: sticky;
     top: 0;
-}
+  }
+  
 
 .VideoDescription .descriptionTop .sectionTitle {
     width: fit-content;
@@ -30,6 +27,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    zoom: 80%;
+
 }
 .VideoDescription .descriptionTop .sectionTitle span{
     font-size: clamp(18px, 1.5rem, 4dvw);
@@ -52,6 +51,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    zoom: 80%;
+
 }
 .VideoDescription .descriptionTop span{
     width: fit-content;
@@ -127,6 +128,8 @@
     grid-template-columns: repeat(2, 1fr);
     align-items: flex-start;
     justify-content: center;
+    z-index: 0;
+    position: relative;
 }
 .VideoDescription main.context > *{
     width: 100%;

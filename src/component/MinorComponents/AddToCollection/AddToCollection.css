@@ -39,10 +39,12 @@
     content: none;
 }
 .collectionListing details summary{
-    width: calc(100% - 22px);
+    width: calc(100% - 24px);
     height: fit-content;
     text-align: left;
     border: 2px solid var(--primary1000);
+    color: var(--primary1000);
+
     border-radius: 5px;
     padding: 10px;
     font-size: clamp(20px, 1.5rem, 2rem );
@@ -75,7 +77,7 @@
 }
 .collectionListing details ul li{
     border: 2px solid var(--primary1000);
-    width: calc(100% - 2px);
+    width: calc(100% - 4px);
     padding: 0;
     text-align: left;
     height: fit-content;
@@ -144,7 +146,7 @@
 }
 .collectionListing details ul li.new{
     background-color: var(--primary800);
-    width: calc(100% - 22px);
+    width: calc(100% - 24px);
     padding: 10px;
     color: var(--primary100);
     font-size: clamp(20px, 1.5rem, 2rem );
@@ -231,7 +233,8 @@
 .new-collection{
     width: 300px;
     min-width: calc(50vw - 2rem);
-    max-width: 500px;    height: fit-content;
+    max-width: 500px;
+    height: fit-content;
     padding: 20px;
     background-color: var(--primary100);
     display: flex;
@@ -344,4 +347,12 @@
     width: 30px;
     height: 30px;
     max-width: calc(5vw - 1rem);
+    min-width: 24px;
+}
+@media screen and (max-width: 500px) {
+    .new-collection{
+        width: 100vw;
+        min-width: calc(80vw - 2rem);
+        max-width: 100%;
+    }
 }

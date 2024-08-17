@@ -118,6 +118,14 @@ li.ListContent{
     text-align: left;
     font-size: clamp(10px, 1.4rem, 2rem);
     font-weight: normal;
+    color: var(--baseBlack1000);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    max-height: calc(1.5em * 1); /* Adjust to the number of lines */
 
 }
  li.ListContent span{
@@ -125,6 +133,7 @@ li.ListContent{
     height: 2rem;
     max-width: 16px;
     max-height: 16px;
+    cursor: pointer;
 }
  li.ListContent span svg{
     width: 100%;
@@ -162,6 +171,7 @@ li.ListContent{
     outline: none;
     border: none;
     color: var(--baseBlack1000);
+    cursor: pointer;
 }
 
 .search ul .searchSuggestion .recent ul,

@@ -8,23 +8,52 @@ import { UserContext } from '../../../UserContext'
 import { toast } from 'react-toastify'
 
 
-function NewCollection({cancel, create, allCollection}){
+export function NewCollection({cancel, create}){
     const [collectionName, setCollectionName] = useState('')
     const [error, setError] = useState({isError: false, message: ''})
+    const {user, setUser} = useContext(UserContext)
+    const [collections, setCollections] = useState([])
+
+
+    useEffect(() => {
+            setCollections(user.userCollections)    
+        }, [user])
     function submit(key=false){
-        if(!allCollection.find(i => i.name == collectionName)){
+        if(!collections.find(i => i.name == collectionName)){
             if(key){
                 if(key.code.toLowerCase() == 'enter'){
-                    collectionName.trim()!==""?create(collectionName):setError({isError: true, message: 'Collection name cannot be empty'})                    
+                    collectionName.trim()!==""?createNewCollection(collectionName):setError({isError: true, message: 'Collection name cannot be empty'})                    
                 }
                 
             }else{
-                collectionName.trim()!==""?create(collectionName):setError({isError: true, message: 'Collection name cannot be empty'})
+                collectionName.trim()!==""?createNewCollection(collectionName):setError({isError: true, message: 'Collection name cannot be empty'})
             }
         }else{
             setError({isError: true, message: `${collectionName} is not available`})
         }
     }
+    function createNewCollection(collectionName){
+        let newDate = new Date()
+        
+        let newCollection = {
+            name: collectionName,
+            items: [],
+            collectionThumbnail: 'https://via.placeholder.com/150',
+            id: Math.floor(Math.random()*1000000),
+            date:newDate,
+        }
+
+        if (collections&&!collections.find(i => i.name === collectionName)) {
+            let updated = updateArray(collections, newCollection)
+            
+            let updateUser = updateUserProperty(user, 'userCollections', updated)
+            setUser(updateUser)
+            create(collectionName)
+          } else {
+            return
+          }
+    }
+
     return (
         <div className="new-collection">
             <div className="input">
@@ -41,9 +70,8 @@ function NewCollection({cancel, create, allCollection}){
     )
 }
 
-function AddToCollection({item="what is the item name", cancel}) {
+function AddToCollection({item="what is the item name", cancel, add=true}) {
     const [collections, setCollections] = useState([])
-    const [updatedCollections, setUpdatedUniqueCollections] = useState(null)
     const [selectedCollection, setSelectedCollection] = useState('')
     const details = useRef(null)
     const [showNewCollection, setShowNewCollection] = useState(false)
@@ -75,30 +103,10 @@ function AddToCollection({item="what is the item name", cancel}) {
     
         
 
-    function createNewCollection(collectionName){
-        let newDate = new Date()
-        
-        let newCollection = {
-            name: collectionName,
-            items: [],
-            collectionThumbnail: 'https://via.placeholder.com/150',
-            id: Math.floor(Math.random()*1000000),
-            date:newDate,
-        }
-
-        if (collections&&!collections.find(i => i.name === collectionName)) {
-            let updated = updateArray(collections, newCollection)
-            
-            let updateUser = updateUserProperty(user, 'userCollections', updated)
-            setUser(updateUser)     
-            setShowNewCollection(false)
-          } else {
-            return
-          }
-    }
     async function handleAddToCollection(collectionName){
         const updatedCollections = collections.map(async collection => {
             if (collection.name === collectionName) {
+                console.log(1)
               if(collection.items&&!collection.items.find(i => i.id == item.id)){
                 if(collection.collectionThumbnail=="https://via.placeholder.com/150"||collection.items.length>0){
                     const img = await generateCollageSrc(collection.items)
@@ -127,18 +135,18 @@ function AddToCollection({item="what is the item name", cancel}) {
         let withoutItem = collections.filter(i => i.name !== item.name)
         const updateUserCollection = updateUserProperty(user, 'userCollections', withoutItem)
 
-        setUser(withoutItem)
-        
-        
+        setUser(updateUserCollection)
     }
     
   return (
     <>
         {
             showNewCollection?
-            <NewCollection allCollection={collections} cancel={()=>setShowNewCollection(false)} create={(val)=>{createNewCollection(val);setSelectedCollection(val.name)}}/>
+            <NewCollection cancel={()=>setShowNewCollection(false)} create={(val)=>{setShowNewCollection(false);setSelectedCollection(val)}}/>
             :<div className="collectionListing">
-                <b>add {`"${item.title}"`} to</b>
+                {
+                    add?<b>add {`"${item.title}"`} to</b>:null
+                }
                 <details ref={details}>
                 <summary className={selectedCollection==""&&!collections.length>0?'new':""} onClick={()=>selectedCollection==''?setShowNewCollection(true):null}>{selectedCollection==''&&!collections.length>0?'Create new collection':selectedCollection==''?"Choose collection":selectedCollection}</summary>
                     {
@@ -163,7 +171,7 @@ function AddToCollection({item="what is the item name", cancel}) {
                 <div className="btns">
                     <span className='btn_cancel' onClick={cancel}>cancel</span>
                     {
-                        selectedCollection!==""?
+                        selectedCollection!==""&&add?
                             <span className='btn_add' onClick={()=>handleAddToCollection(selectedCollection)}>Add to {`"${selectedCollection}"`}</span>
                         :null
                     }

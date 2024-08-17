@@ -12,7 +12,7 @@ const SelectedPlaylist = React.lazy(() => import('../Playlist/PlaylistSelected')
 const PlayedVideo = React.lazy(() => import('../VideoPlaying/VideoPlaying'));
 const RequestTest = React.lazy(() => import('../../component/asset component/RequestTest/RequestTest'));
 const PlayedVideoTest = React.lazy(() => import('../../component/asset component/RequestTest/VideoPlaying/VideoPlaying'));
-
+const ENoInternet = React.lazy(()=>import('../../component/MinorComponents/E404/E404'));
 
 
 
@@ -26,5 +26,5 @@ export {
     PlayedVideo,
     RequestTest,
     PlayedVideoTest,
-    
+    ENoInternet,
 }

@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { userProfile } from './functions/Requests/actions'
+import { generateCollageSrc, updateUserProperty, userProfile } from './functions/Requests/actions'
 import Loader from './component/asset component/Loader/Loader'
 import Modal from './component/MinorComponents/Modal/Modal'
+import { setColor } from './App'
 export const UserContext = createContext()
 function UserContextProvider({children}) {
   const [message, setMessage] = useState({type: 'error', message: 'error retrieving content', return: false})
@@ -25,6 +26,7 @@ function UserContextProvider({children}) {
         try {
           await userProfile.getFromStorage().then(res => {
             setUser(JSON.parse(res))
+      
             setMessage({type: 'success', message: `welcome ${JSON.parse(res).name}`, return: true})
             setLoading(false)
           })
@@ -37,11 +39,26 @@ function UserContextProvider({children}) {
     }
     useEffect(() => {
       getUser()
+      setColor()
       
     }, [])
     useEffect(() => {
-        if(user&&user.id > 0){                    
-            userProfile.setToStorage(user).then(res => res)
+      async function update() {
+        const updateUsers = user.userCollections.map(async collection => {
+          const collectionThumbnail = await generateCollageSrc(collection.items)
+          const collectionData = { ...collection, collectionThumbnail }
+          return(collectionData);
+        })
+        const content = await Promise.all(updateUsers)
+        const updateUserWithCollectionWithThumbnail = updateUserProperty(user, 'userCollections', content)
+        userProfile.setToStorage(updateUserWithCollectionWithThumbnail).then(res => res)
+
+        
+      }
+
+
+        if(user&&user.id > 0){         
+           update()
         }
         
       }, [user])
@@ -51,18 +68,18 @@ function UserContextProvider({children}) {
         }
         
       }, [message])
-      useEffect(() => {
-        setTimeout(() => {
-          if(!loading&&user){
-            setMessage({type: 'success', message: `welcome ${user.name}`, return: true})
-            return
-          }else if(loading){           
-            setLoading(false)
-            setMessage({type: 'error', message: 'taking too much time to load', return: true})
-          }
+      // useEffect(() => {
+      //   setTimeout(() => {
+      //     if(!loading&&user){
+      //       setMessage({type: 'success', message: `welcome ${user.name}`, return: true})
+      //       return
+      //     }else if(loading){           
+      //       setLoading(false)
+      //       setMessage({type: 'error', message: 'taking too much time to load', return: true})
+      //     }
   
-        }, 10000);
-      }, [loading])
+      //   }, 10000);
+      // }, [loading])
 
       
   return (

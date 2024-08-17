@@ -4,9 +4,10 @@ import React from 'react'
 import './ActionWithIcon.css'
 import { AngleRightIcon } from '../../asset component/Icons/Icons'
 
-function ActionWithIcon({iconFill="var(--baseBlack1000)", icon=<AngleRightIcon fill={iconFill}/>, children="Action"}) {
+function ActionWithIcon({onClick=()=>{return}, className='', iconFill="var(--baseBlack1000)", icon=<AngleRightIcon fill={iconFill}/>, children}) {
+  
   return (
-    <span className='ActionWithIcon'>
+    <span onClick={()=>onClick()} className={`ActionWithIcon ${className}`}>
         <b>{children}</b>
         <i>{icon}</i>
     </span>

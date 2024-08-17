@@ -12,7 +12,31 @@ import { GenraMap3 } from '../../component/MinorComponents/GenreMap/GenreMap'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../../component/MinorComponents/Modal/Modal'
 import AddToCollection from '../../component/MinorComponents/AddToCollection/AddToCollection'
+import ActionWithIcon from '../../component/MinorComponents/ActionWithIcon/ActionWithIcon'
+import { AngleRightIcon } from '../../component/asset component/Icons/Icons'
 
+function ItemCardAction({fill='var(--primary100)', item,actions=[
+    {
+        name:'delete',
+        action: (item)=>{return},
+    },
+    {
+        name:'save',
+        action: (item)=>{return},
+    }
+]}) {
+return (
+<>
+    {
+        actions.map(i=>{
+            return(
+                <ActionWithIcon className='newAddblast' onClick={()=>i.action(item)} key={i.name} icon={<AngleRightIcon fill={fill}/>}>{i.name}</ActionWithIcon>
+            )
+        })
+    }
+</>
+)
+}
 
 function image(path){
     return IMAGE_BASE_URL+BACKDROP_SIZE[0]+path
@@ -20,6 +44,7 @@ function image(path){
 function ForYou({isLessThan500, forYouArray, page, setPage}){
     const [rangeArray, setRangeArray] = useState([])
     const navigate = useNavigate()
+    const [addCollection, setAddCollection] = useState(null)
     
     useEffect(() => {
       setRangeArray(range(page.maxPage, 1))
@@ -27,12 +52,22 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
     useEffect(() => {
         // console.log(rangeArray);
     }, [rangeArray])
+    const forYouOptions = [
+        {
+            name:'save to collection',
+            action: (item)=>{setAddCollection(item)},
+        },
+        {
+            name:'open',
+            action: (item)=>{navigate(`/video?title=${item.title}`)},
+        }
+    ]
     
     return(
         <>
             <section className="forYou">
             {
-                forYouArray.map((forYou, index) => {
+                forYouArray&&forYouArray.map((forYou, index) => {
                     return (
                         
                             index <= ((forYouArray.length - 1) / page.maxPage) * page.page &&
@@ -55,6 +90,7 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
                                 key={`${forYou.title}${forYou.id}${index}`}
                                 verticalAlign={isLessThan500}
                                 onClick={() => navigate(`/video?title=${forYou.title}`)}
+                                // optionDropItems={<ItemCardAction item={forYou} actions={forYouOptions} />}
                             />
                             ) : null
                         )
@@ -70,6 +106,14 @@ function ForYou({isLessThan500, forYouArray, page, setPage}){
                     })
                 }
             </ul>
+
+            {
+                addCollection?
+                    <Modal defaultCancel={false}>
+                        <AddToCollection cancel={()=>setAddCollection(null)} item={addCollection} />
+                    </Modal>
+                :null
+            }
         </>
     )
 }

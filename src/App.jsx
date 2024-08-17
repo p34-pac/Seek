@@ -6,7 +6,7 @@ import './App.css'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './component/asset component/Loader/Loader';
-import { ColorPalette, ComponentsPreview, PlayedVideo, PlayedVideoTest, Playlist, RequestTest, Search, SelectedPlaylist } from './pages/All/All';
+import { ColorPalette, ComponentsPreview, ENoInternet, PlayedVideo, PlayedVideoTest, Playlist, RequestTest, Search, SelectedPlaylist } from './pages/All/All';
 import { json, Route, Routes } from 'react-router-dom';
 import { generateShades, parseColorsToCssVar } from './functions/colorgenerator';
 import Home from './pages/Home/Home';
@@ -18,7 +18,7 @@ import UserContextProvider, { UserContext } from './UserContext';
 import Modal from './component/MinorComponents/Modal/Modal';
 import { ArrowRightIcon } from './component/asset component/Icons/Icons';
 
-function setColor(){
+export function setColor(){
   let primary = generateShades("#2E0245")
     let secondary = generateShades("#32263E")
     let baseWhite = generateShades("#F2F2F2")
@@ -99,8 +99,7 @@ function GenreListing({save, skip}){
   
   return (
     <>
-    <div className="genre-listing">bbbbb</div>
-      <Modal defaultCancel={false}>
+      <Modal className='genreModal' defaultCancel={false}>
         <div className="top">
 
           
@@ -161,7 +160,7 @@ function App() {
     };
 
     setPageName(getLastPathSegment(window.location.pathname));
-    setColor()
+    
     
 
     // if(user){
@@ -191,7 +190,7 @@ function App() {
       setForYou(generateForYou);
       
     }
-   if(user.favoriteGenres&&user.favoriteGenres.length>0){
+   if(user&&(user.favoriteGenres&&user.favoriteGenres.length>0)){
       getForYou(user.favoriteGenres)
    }else{
     setShowGList(true)
@@ -213,16 +212,16 @@ function App() {
     
     
     {isReady ? 
-      user.favoriteGenres.length>0?
+      user.favoriteGenres&&user.favoriteGenres.length>0?
         <Suspense fallback={<Loader path={path}/>}>
             <Routes>
                 {/* main pages */}
                 <Route path='/' element={<Home forYou={forYou}/>} />
                 <Route path='/search' element={<Search/>} />
-                <Route path='/playlists' element={<Playlist/>} />
-                <Route path='/playlists/:playlist_name' element={<SelectedPlaylist/>} />
-                <Route path='/playlists/:playlist_name/video' element={<PlayedVideo/>} />
-                <Route path='/playlists/video' element={<PlayedVideo/>} />
+                <Route path='/collection' element={<SelectedPlaylist/>} />
+                {/* <Route path='/collection/:playlist_name' element={<SelectedPlaylist/>} /> */}
+                <Route path='/collection/:playlist_name/video' element={<PlayedVideo/>} />
+                <Route path='/collection/video' element={<PlayedVideo/>} />
                 <Route path='/video' element={<PlayedVideo/>} />
 
 
@@ -231,6 +230,7 @@ function App() {
                 <Route path="/assets/components" element={<ComponentsPreview />} />
                 <Route path="/tests/requests" element={<RequestTest />} />
                 <Route path='/tests/requests/played' element={<PlayedVideoTest/>} />
+                <Route path='/no_internet' element={<ENoInternet/>} />
                 <Route path='*' element={<div>{`"${path}"`} page not found</div>} />
             </Routes>
         </Suspense>

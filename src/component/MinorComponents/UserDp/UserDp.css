@@ -38,6 +38,16 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: pointer;
+    
+}
+.UserDp .userInfo .userDpPhoto img{
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+    border-radius: 50%;
+
 }
 .UserDp .userInfo .userDpPhoto span{
     width: 30px;
@@ -61,4 +71,157 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+}
+@keyframes enterImage {
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+.UserDp .previewModal{
+    
+    animation: enterImage 500ms forwards;
+    animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.UserDp .previewModal .ModalInner{
+    width: 500px !important;
+    min-width: fit-content !important;
+    position: relative;
+    padding: 0;
+}
+.UserDp .previewModal .imgBox {
+    width: calc(100% - 40px);
+    padding: 0 20px;
+    height: 70vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* overflow: auto; */
+    perspective: 100px;
+}
+.UserDp .previewModal .ModalInner .cancel {
+    width: 25px;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-color: var(--primary1000);
+    padding: 0 10px;
+    /* border-bottom-left-radius: 10px; */
+    border-top-right-radius: 10px;
+    cursor: pointer;
+    z-index: 1;
+
+}
+.UserDp .previewModal .ModalInner .cancel:hover {
+    background-color: var(--primary600);
+    transition-duration: 200ms;
+
+}
+.UserDp .previewModal .ModalInner .cancel svg{
+    width: 100%;
+    height: 100%;
+}
+
+
+.UserDp .previewModal .ModalInner .top{
+    width: calc(100%);
+    height: fit-content;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    background-color: var(--primary800);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    margin: 0 0 20px 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.UserDp .previewModal .ModalInner .top .text{
+    margin: 0 !important;
+    width: 80%;
+    max-width: calc(80% - 60px);
+    text-align: left;
+    font-size: clamp(8px, 1rem, 1.5rem);
+    font-weight: normal;
+    color: var(--primary100);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    max-height: calc(1.5em * 1); /* Adjust to the number of lines */
+}
+.UserDp .previewModal .imgBox img{
+    max-width: 100%;
+    max-height: 100%;
+    object-position: center;
+    object-fit: contain;
+    border-radius: 10px;
+    transform-style: preserve-3d;
+    transform: scale(0.5);
+    animation: zoomReveal 500ms forwards;
+    animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation-delay: 100ms;
+}
+@keyframes zoomReveal {
+    from{
+        transform: scale(0.5);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+
+.UserDp .previewModal .actions {
+    width: calc(100% - 40px);
+    padding: 0 20px;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+
+
+.UserDp .previewModal .actions button{
+    width: 100%;
+    max-width: 200px;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: var(--primary800);
+    outline: none;
+    border: none;
+    font-size: clamp(20px, 1.5rem, 2rem );
+    border-radius: 10px;
+    cursor: pointer;
+}
+.UserDp .previewModal .actions button:active{
+    transform: scale(0.95);
+}
+.UserDp .previewModal .actions button:first-child{
+    background-color: var(--primary200);
+    background-color: rgba(255, 0, 0, 0.501);
+    color: var(--baseWhite1000);
+    box-shadow: inset 2px 2px 5px #ff000063,
+                inset -2px -2px 5px #ff000063;
+
+}
+.UserDp .previewModal .actions button svg{
+    width: 30px;
+    height: 30px;
+    max-width: calc(5vw - 1rem);
+    min-width: 24px;
 }

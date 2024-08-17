@@ -209,20 +209,18 @@ export class StorageManager {
 
 
 
-export const updateArray = (array, newItem) => {
+export const updateArray = (array, newItem, maxLength=6) => {
   // Check if the newItem is already in the array
-  console.log(array);
   if (array.includes(newItem)) {
     return array; // Return the array unchanged if the item is already present
   }
 
   // If the array length is 10 or more, remove the last item
-  if (array.length >= 10) {
+  if (array.length >= maxLength) {
     array.pop(); // Remove the last item from the array
   }
 
   // Add the newItem to the start of the array
-  console.log(array);
   array.unshift(newItem);
 
   return array;
@@ -297,7 +295,7 @@ export function updateUserProperty(user, propertyPath, newValue) {
 export const generateCollageSrc = async (collection) => {
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
-  const images = collection.slice(0, 4).map(movie => `https://image.tmdb.org/t/p/w500${movie.poster_path}`);
+  const images = collection.slice(0, 4).map(movie => `https://image.tmdb.org/t/p/${BACKDROP_SIZE[BACKDROP_SIZE.length-1]}${movie.poster_path}`);
   
   const loadImages = images.map(src => {
     return new Promise((resolve, reject) => {
@@ -312,30 +310,38 @@ export const generateCollageSrc = async (collection) => {
   try {
     const imgs = await Promise.all(loadImages);
 
-    // Determine canvas size and image sizes based on number of images
-    const size = 200; // base size for the images
+    // Determine canvas size and image sizes based on the number of images
+    const size = BACKDROP_SIZE[BACKDROP_SIZE.length - 2].split('w')[1];
+
     canvas.width = size * (imgs.length === 1 ? 1 : 2);
     canvas.height = size * (imgs.length === 1 ? 1 : 2);
 
     if (imgs.length === 1) {
-      ctx.drawImage(imgs[0], 0, 0, canvas.width, canvas.height);
+        const img = imgs[0];
+        const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+        const x = (canvas.width / 2) - (img.width / 2) * scale;
+        const y = (canvas.height / 2) - (img.height / 2) * scale;
+        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
     } else if (imgs.length === 2) {
-      imgs.forEach((img, index) => {
-        const x = index * size;
-        ctx.drawImage(img, x, 0, size, canvas.height);
-      });
+        imgs.forEach((img, index) => {
+            const scale = Math.max(size / img.width, canvas.height / img.height);
+            const x = index * size;
+            ctx.drawImage(img, x, 0, img.width * scale, img.height * scale);
+        });
     } else if (imgs.length === 3) {
-      imgs.forEach((img, index) => {
-        const x = (index % 2) * size;
-        const y = index === 2 ? size : 0;
-        ctx.drawImage(img, x, y, size, index === 2 ? size * 2 : size);
-      });
+        imgs.forEach((img, index) => {
+            const scale = Math.max(size / img.width, size / img.height);
+            const x = (index % 2) * size;
+            const y = index === 2 ? size : 0;
+            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        });
     } else if (imgs.length === 4) {
-      imgs.forEach((img, index) => {
-        const x = (index % 2) * size;
-        const y = Math.floor(index / 2) * size;
-        ctx.drawImage(img, x, y, size, size);
-      });
+        imgs.forEach((img, index) => {
+            const scale = Math.max(size / img.width, size / img.height);
+            const x = (index % 2) * size;
+            const y = Math.floor(index / 2) * size;
+            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        });
     }
 
     return canvas.toDataURL();

@@ -69,7 +69,6 @@
 }
 .profileSection .collectionsCategoryOverview .collection .MovieCard .otherOptions .options >*:hover{
     background-color: var(--primary600);
-    color: var(--primary100);
     transition-duration: 200ms;
 }
 
@@ -100,6 +99,26 @@
     font-weight: bold;
     font-size: clamp(10px, 1.2rem, 1.8rem);
 }
+.profileSection .collectionsCategoryOverview .MyCollections .add{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+
+}
+.profileSection .collectionsCategoryOverview .MyCollections .add b{
+    font-size: clamp(10px, 1rem, 1.5rem) !important;
+    font-weight: bolder;
+    color: var(--baseBlack1000);
+}
+.profileSection .collectionsCategoryOverview .MyCollections .add svg{
+    width: 1.2rem;
+    max-width: 24px;
+    height: 24px;
+}
 
 @media screen and (max-width: 800px) {
     .profileSection{
@@ -108,7 +127,7 @@
         right: 0 !important;
         z-index: 3;
         width: 500px;
-        max-width: calc(100vw + 100px);
+        max-width: calc(100vw);
         animation: slideRightPosition 200ms linear forwards;
         animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
     }

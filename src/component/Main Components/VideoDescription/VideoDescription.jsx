@@ -77,10 +77,7 @@ function VideoDescription({videoInfo}) {
         a.click()
     }
 
-    useEffect(() => {
-      console.log(collectionPopUp);
-      
-    }, [collectionPopUp])
+
     
 
 

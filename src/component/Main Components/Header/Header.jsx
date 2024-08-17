@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Header.css'
 import { AngleLeftIcon, ArrowRightIcon, LogoWIthText, MoonIcon, SunIcon } from '../../asset component/Icons/Icons'
 import Search from '../Search/Search'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../../UserContext'
 
 function Left(){
     const navigate = useNavigate()
@@ -21,6 +22,7 @@ function Left(){
 function Header({openProfile, searchParam, customLeft=<Left/>}) {
     const [focused, setFocused] = useState(false)
     const [theme, setTheme] = useState("light")
+    const {user, setUser} = useContext(UserContext)
 
     function toggleTheme(){
         if(theme=="light"){
@@ -51,7 +53,11 @@ function Header({openProfile, searchParam, customLeft=<Left/>}) {
             </span>
             <div className="searchInput"><Search loadParam={searchParam} setParentalFocus={(val)=>setFocused(val)}/></div>
             <span className="profile">
-                <div className="profileOpen" onClick={openProfile}></div>
+                <div className="profileOpen" onClick={openProfile}>
+                    {
+                        user.dp?<img src={user.dp.src} alt={user.dp.name} />:null
+                    }
+                </div>
             </span>
         </div>
     </div>
