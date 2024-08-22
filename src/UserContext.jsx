@@ -79,7 +79,7 @@ function UserContextProvider({children}) {
             setMessage({type: 'error', message: 'taking too much time to load', return: true})
 
           }
-          setLoading(false)
+            setLoading(false)
 
   
         }, 10000);
