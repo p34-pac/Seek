@@ -165,7 +165,7 @@ function VideoDescription({videoInfo}) {
     </div>
     {
         collectionPopUp?<Modal defaultCancel={false} shown={collectionPopUp}>
-            <AddToCollection item={videoInfo} cancel={()=>setCollectionPopUp(false)} />
+            <AddToCollection  item={videoInfo} cancel={()=>setCollectionPopUp(false)} />
         </Modal>:null
     }
     </>

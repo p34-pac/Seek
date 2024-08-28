@@ -1,10 +1,9 @@
 
 .collectionListing{
-    min-width: calc(50vw - 2rem);
-    max-width: 500px;
-    width: fit-content;
+    width: 100%;
     height: fit-content;
-    padding: 20px;
+    padding: 0;
+    box-sizing: border-box;
     background-color: var(--primary100);
     border-radius: 10px;
 }
@@ -231,11 +230,10 @@
 
 /* new collection */
 .new-collection{
-    width: 300px;
-    min-width: calc(50vw - 2rem);
-    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
     height: fit-content;
-    padding: 20px;
+    padding: 0;
     background-color: var(--primary100);
     display: flex;
     flex-direction: column;

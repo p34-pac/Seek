@@ -5,10 +5,10 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    background-color: var(--primary500);
+    background-color: var(--primary100);
     padding: 10px 20px;
     position: sticky;
-    box-shadow: 0px 2px 5px var(--baseBlack700);
+    box-shadow: 0px 2px 10px var(--baseBlack700);
     top: 0;
     z-index: 3;
 }

@@ -40,8 +40,18 @@ return (
 )
 }
 
-function image(path){
-    return IMAGE_BASE_URL+BACKDROP_SIZE[0]+path
+export function image(path, __size=0){
+    
+    let resized = __size
+    let maxSize = BACKDROP_SIZE.length-1
+
+    
+
+    if(__size>BACKDROP_SIZE.length-1){
+        resized = maxSize
+    }
+
+    return IMAGE_BASE_URL+BACKDROP_SIZE[resized]+path
 }
 function ForYou({isLessThan500, forYouArray}){
     const [page, setPage] = useState(1)
@@ -60,12 +70,18 @@ function ForYou({isLessThan500, forYouArray}){
                 setMaxPage(Math.round(((forYouArray.length-1)/10))+1)
             }
         }
+        setPage(1)
+        console.log(forYouArray);
+        
         
       }, [forYouArray])
     
     useEffect(() => {
       setRangeArray(range(maxPage, minPage))
     }, [maxPage])
+    useEffect(() => {
+        console.log(page)
+      }, [page])
     const forYouOptions = [
         {
             name:'save to collection',
@@ -138,9 +154,6 @@ function ForYou({isLessThan500, forYouArray}){
 
 function Home({forYou}) {
     const [tab, setTab] = useState(1)
-    const [page, setPage] = useState(1)
-    const [minPage, setMinPage] = useState(1)
-    const [maxPage, setMaxPage] = useState(1)
     const {user, setUser} = useContext(UserContext)
     const [trending, setTrending] = useState(null)
     
@@ -168,13 +181,16 @@ function Home({forYou}) {
       
 
 
+      
+
+
   return (
  <>
     <div className='Home'>
             
             <main>
                 <Header openProfile={()=>setShowProfile(true)}/>
-                <Carousel images={images}/>
+                <Carousel items={trending&&trending.filter((i, index)=> index < 4)} images={images}/>
                 <div className="section">
                     <ul className="tabs">
                         <li className={tab==1?"pres":null} onClick={()=>setTab(1)}><b>For you</b></li>
@@ -182,9 +198,9 @@ function Home({forYou}) {
                     </ul>
                     {
                         tab==1?
-                            <ForYou setPage={(val)=>setPage(val)} isLessThan500={isLessThan500} forYouArray={forYou}/>
+                            <ForYou  isLessThan500={isLessThan500} forYouArray={forYou}/>
                         :tab==2?
-                            <ForYou setPage={(val)=>setPage(val)} isLessThan500={isLessThan500} forYouArray={trending}/>
+                            <ForYou isLessThan500={isLessThan500} forYouArray={trending}/>
                         :null
                     }
                 </div>  

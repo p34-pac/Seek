@@ -75,7 +75,7 @@
 .search ul .searchSuggestion{
     width: calc(100% - 20px);
     min-width: 400px;
-    max-width: calc(100% - 22px) !important;
+    max-width: calc(100vw - 22px) !important;
 
     height: fit-content;
     max-height: calc(100vh - 130px);
@@ -216,13 +216,13 @@ li.ListContent{
     .search ul .searchSuggestion{
         width: 100%;
         
-        min-width: calc(100vw - 20px);
+        min-width: calc(100vw);
         max-width: unset;
         height: calc(100vh - 75px);
-        zoom: calc(100% + 40%);
+        zoom: calc(100% + 5%);
         overflow-y: scroll;
         position: absolute;
-        top: calc(45px);
+        top: calc(60px);
         border-radius: 0;
     }
     .search ul .input input{

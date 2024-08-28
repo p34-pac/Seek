@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import './Modal.css'
 import { CancelIcon } from '../../asset component/Icons/Icons'
+// import { X } from '@phosphor-icons/react'
 
 
 function Modal({before=null, className='', children, shown=true, defaultCancel=true, remove=null}) {
@@ -15,7 +16,7 @@ function Modal({before=null, className='', children, shown=true, defaultCancel=t
                    
                     <div data-before={before} className="ModalInner">
                         {defaultCancel?
-                            <span className="removerDef"><CancelIcon onClick={()=>{remove?remove():setDefShow(false)}} /></span>
+                            <span className="removerDef"><CancelIcon fill="#704848" onClick={()=>{remove?remove():setDefShow(false)}} /></span>
                         :null}
                         {children}
                     </div>

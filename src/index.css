@@ -32,6 +32,10 @@ body {
 *[data-after]::after{
   content: attr(data-after);
 }
+button:active{
+  transform: scale(0.95);
+  user-select: none;
+}
 
 
 

@@ -69,20 +69,22 @@ function UserContextProvider({children}) {
         
       }, [message])
       useEffect(() => {
-        setTimeout(() => {
+        const loadTime = setTimeout(() => {
           if(!loading&&user){
             setMessage({type: 'success', message: `welcome ${user.name}`, return: true})
+            
             return
-          }else if(loading && user){           
+          }else if(loading && user){ 
             setLoading(false)
           }else{
             setMessage({type: 'error', message: 'taking too much time to load', return: true})
-
           }
             setLoading(false)
 
   
         }, 10000);
+
+        return ()=>clearTimeout(loadTime)
       }, [loading])
 
       

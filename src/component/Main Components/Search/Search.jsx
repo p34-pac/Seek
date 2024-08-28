@@ -123,7 +123,7 @@ function Search({ setParentalFocus, loadParam }) {
           {focused && (
             <li className="searchSuggestion">
               
-              {searchData.length>0?
+              {searchData&&searchData.length>0?
                 <div className='recent'>
                   <span className="top">
                     <b>Recent searches</b>
@@ -152,7 +152,7 @@ function Search({ setParentalFocus, loadParam }) {
                   <b>You may like</b>
                 </span>
                 <ul>
-                  {user&&user.trending.length>0?user.trending.filter(i => !searchData.includes(i.title)).map((data, index) => (
+                  {searchData&&user&&user.trending&&user.trending.length>0?user.trending.filter(i => !searchData.includes(i.title)).map((data, index) => (
                     index<6?
                       <ListContent key={index} onClick={() => {handleRedirect(null, data.title)}} text={data.title} icon={<ArrowBendUpIcon fill='var(--baseWhite1000)' />} />
                     :null

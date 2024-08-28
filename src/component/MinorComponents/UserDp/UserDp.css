@@ -6,16 +6,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px var(--primary500);
+    box-shadow: 0 2px 5px var(--baseBlack500);
     padding-bottom: 1rem;
-    background-color: var(--primary200);
+    background-color: var(--primary100);
 
     
 }
 .UserDp .cover{
     width: 100%;
     height: 200px;
-    background-color: var(--primary800);
+    background-color: var(--primary400);
     overflow: hidden;
 }
 .UserDp .userInfo{

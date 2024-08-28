@@ -8,6 +8,7 @@
 .ActionWithIcon b{
     width: 200px;
     min-width: fit-content;
+    max-width: 80%;
     font-weight: normal;
     font-size: clamp(8px, 1.5rem, 1.8rem);
     text-align: left;
